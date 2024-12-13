@@ -1,0 +1,71 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+db.sqlite3
+
+# If you are using Postgres:
+*.pgsql
+
+# Media files
+media/
+
+# Static files
+staticfiles/
+static/
+
+# Local environment variables
+.env
+
+# Virtual environments
+env/
+venv/
+ENV/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing
+.coverage
+*.cover
+*.py,cover
+htmlcov/
+.tox/
+.nox/
+.cache
+coverage.xml
+*.cover
+nosetests.xml
+*.log
+
+# Deployment
+*.pid
+*.seed
+*.pid.lock
+
+# Build and distribution
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+wheels/
+
+# PyInstaller
+*.manifest
