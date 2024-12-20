@@ -4,8 +4,9 @@ from.models import*
 
 
 def home(request):
-    return render(request,"f4fitness/index.html",context={"data:data"})
     data=UserRegisteration.objects.all
+    return render(request,"f4fitness/index.html",{'data':data})
+
     
 
 
