@@ -40,6 +40,13 @@ INSTALLED_APPS = [
     'f4fitnessapp',
 ]
 
+# settings.py
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Make sure this path exists
+    # Add other paths if needed
+]
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -55,8 +62,8 @@ ROOT_URLCONF = 'Gym.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR,"templates"],
-        'APP_DIRS': True,
+        'DIRS': ['templates'],
+        'APP_DIRS': True,  # This tells Django to look in app's templates directories
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -123,3 +130,5 @@ STATICFILES_DIRS=[BASE_DIR/ "static"]
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

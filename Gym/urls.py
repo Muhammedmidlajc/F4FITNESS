@@ -20,4 +20,12 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('f4fitnessapp/',include('f4fitnessapp.urls'))
-]
+
+] 
+
+
+
+
+
+
+

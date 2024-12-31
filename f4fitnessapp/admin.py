@@ -1,3 +1,4 @@
 from django.contrib import admin
 from.models import*
-admin.site.register(UserRegisteration)
+admin.site.register(UserProfile)
+#admin.site.register(TrainerProfile)
