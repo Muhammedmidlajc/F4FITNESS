@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Login</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color:rgb(49, 112, 190);
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #e9ecef;
+        }
+        .form-container {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgb(72, 137, 228);
+            width: 100%;
+            max-width: 380px;
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 22px;
+            color: #333;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+        .form-container input {
+            width: 94%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            background-color:rgb(114, 158, 220);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .form-container button:hover {
+            background-color:rgb(114, 158, 220);
+        }
+        .form-container p {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .form-container p a {
+            color:rgb(20, 107, 227);
+            text-decoration: none;
+        }
+        .form-container p a:hover {
+            text-decoration: underline;
+        }
+        .eye-icon {
+            position: absolute;
+            right: 15px;
+            top: 14px;
+            cursor: pointer;
+        }
+        .input-container {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Trainer Login Form</h1>
+    </header>
+    <main>
+        <div class="form-container">
+            <h2>Login Trainer Account</h2>
+            <form method="post">
+                {% csrf_token %}
+                
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                
+                <label for="password">Password</label>
+                <div class="input-container">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <span class="eye-icon" onclick="togglePassword()">&#128065;</span> <!-- Eye icon for password toggle -->
+                </div>
+                
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="{% url 'trainer_register' %}">Register here</a>.</p>
+        </div>
+    </main>
+
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var eyeIcon = document.querySelector(".eye-icon");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";  
+                eyeIcon.innerHTML = "&#128065;"; 
+            } else {
+                passwordField.type = "password";  
+                eyeIcon.innerHTML = "&#128064;"; 
+            }
+        }
+    </script>
+</body>
+</html>

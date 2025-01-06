@@ -1,0 +1,32 @@
+<!-- templates/includes/dashboard_base.html -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Dashboard</h2>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="{% url 'trainer_managment' %}">Trainer</a></li>
+                <li><a href="{% url 'user_management' %}">Users</a></li>
+                <li><a href="#">Reports</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            {% block content %}
+            <!-- Main content will go here -->
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

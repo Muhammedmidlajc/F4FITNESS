@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+            background-color: #e9ecef;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background-color: #28a745;
+            padding: 20px;
+            color: white;
+            box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #218838;
+        }
+
+        .sidebar .active {
+            background-color: #218838;
+        }
+
+        /* Main content styles */
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+            flex-grow: 1;
+            background-color: #fff;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .header .user-info {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #28a745;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 48%;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card .title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card .value {
+            font-size: 24px;
+            color: #28a745;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 40px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        /* Media Query for Mobile Devices */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 15px;
+            }
+
+            .cards {
+                flex-direction: column;
+            }
+
+            .card {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h2>Trainer Dashboard</h2>
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">My Profile</a>
+            <a href="#">Sessions</a>
+            <a href="#">Clients</a>
+            <a href="#">Reports</a>
+            <a href="#">Settings</a>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <h1>Welcome, Trainer</h1>
+                <div class="user-info">
+                    <img src="https://via.placeholder.com/40" alt="Trainer Image">
+                    <span>John Doe</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Trainer Stats</h3>
+                <div class="cards">
+                    <div class="card">
+                        <div class="title">Total Sessions</div>
+                        <div class="value">58</div>
+                    </div>
+                    <div class="card">
+                        <div class="title">Total Clients</div>
+                        <div class="value">24</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Upcoming Sessions</h3>
+                <div class="cards">
+                    <div class="card">
+                        <div class="title">Session 1</div>
+                        <div class="value">Yoga with Sarah</div>
+                    </div>
+                    <div class="card">
+                        <div class="title">Session 2</div>
+                        <div class="value">HIIT with Mark</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>&copy; 2025 Trainer Dashboard. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
