@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
 from .forms import UserProfileForm
 from .forms import TrainerProfileForm
@@ -7,6 +7,7 @@ from. import views
 from.models import TrainerProfile
 from django.shortcuts import get_object_or_404
 from.models import UserProfile
+from django.contrib.auth.models import User
 
 
 
@@ -27,8 +28,19 @@ def trainer_management(request):
 def register(request):
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES)
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+
         if form.is_valid():
-                form.save()  
+                try:
+                    user=User.objects.create_user(username=username,password=password)
+                except Exception as e:
+                    print(e)
+                    render(request, 'f4fitness/register.html', {'form': form})
+                profile=form.save(commit=False)
+                profile.user=user
+                profile.save()
+
                 messages.success(request, 'Registration successful! Please login.')
                 return redirect('login')  
     else:
@@ -43,16 +55,75 @@ def login_view(request):
         password = request.POST.get('password')
 
         user = authenticate(request, username=username, password=password)
+        print(username,password,user)
 
         if user is not None:
             login(request, user)
             messages.success(request, 'Login successful!')
-            return render(request, 'login.html', {'login_success': True})
+            return redirect('user_dashboard')
         else:
             messages.error(request, 'Invalid username or password')
-            return redirect('user_dashboard')  
+            return redirect('login')  
 
     return render(request, 'f4fitness/login.html')
+
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'You have been logged out successfully.')
+    return redirect('login')
+
+def user_profile(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        name = request.POST.get('name')
+        dob = request.POST.get('dob')
+        address = request.POST.get('address')
+        phone_number = request.POST.get('phone_number')
+        image = request.FILES.get('image')
+
+        # Update user model
+        if username :
+            request.user.username = username
+        if password:
+            request.user.set_password(password)
+        request.user.save()
+
+        # Update user profile
+        profile.name = name
+        profile.dob = dob
+        profile.address = address
+        profile.phone_number = phone_number
+        if image:
+            profile.image = image
+        profile.save()
+
+        messages.success(request, 'Profile updated successfully!')
+        return redirect('user_profile')
+
+    return render(request, 'userprofile.html', {'profile': profile})
+
+
+def user_progress(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    return render(request, 'user_progress.html', {'profile': profile})
+
+from django.http import JsonResponse
+import json
+
+def chatbot(request):
+    if request.method == 'POST':
+        data = json.loads(request.body) 
+        user_message = data.get('message') 
+        bot_response = "This is a placeholder response." 
+        print(user_message)
+        if user_message == 'hii':
+            bot_response = 'helllo'
+        return JsonResponse({'response': bot_response})
+    return render(request, 'chatbot.html')
 
 
 

@@ -9,7 +9,7 @@ from .models import TrainerProfile
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['name', 'username', 'password', 'dob', 'address', 'phone_number', 'image']
+        fields = ['name', 'dob', 'address', 'phone_number', 'image']
         widgets = {
             'password': forms.PasswordInput(),  
             'dob': forms.DateInput(attrs={'type': 'date'}), 

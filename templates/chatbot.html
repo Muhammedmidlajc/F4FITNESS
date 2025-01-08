@@ -1,0 +1,137 @@
+{% extends 'userbase.html' %}
+
+{% block title %}ChatBot{% endblock %}
+
+{% block content %}
+    <!-- Chatbot Container -->
+    <div class="chatbot-container">
+        <div class="chatbox">
+            <div class="chatbox-header">
+                <span>GymBot</span>
+            </div>
+            <div class="chatbox-content" id="chatbox-content">
+                <div class="message bot-message">Hello! How can I assist you with your gym progress today?</div>
+            </div>
+            <input type="text" id="user-input" class="chatbox-input" placeholder="Type a message..." onkeydown="if(event.key === 'Enter'){sendMessage();}" />
+        </div>
+    </div>
+
+    <style>
+        /* Chatbot Styles */
+        .chatbot-container {
+            position: absolute; /* Changed from fixed to absolute */
+            top: 60%; /* Center vertically */
+            left: 60%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Adjust position to center */
+            width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .chatbox {
+            display: flex;
+            flex-direction: column;
+            height: 650px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .chatbox-header {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .chatbox-content {
+            padding: 10px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            max-width: 80%;
+            display: flex;
+        }
+
+        .bot-message {
+            background-color: #f1f1f1;
+            color: #333;
+            align-self: flex-start;
+            margin-left: auto; /* Align bot messages to the right */
+        }
+
+        .user-message {
+            background-color: #28a745;
+            color: white;
+            align-self: flex-end;
+            margin-right: auto; /* Align user messages to the left */
+        }
+
+        .chatbox-input {
+            padding: 10px;
+            border: none;
+            border-top: 1px solid #e0e0e0;
+            outline: none;
+            width: 100%;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .chatbox-input:focus {
+            border-color: #28a745;
+        }
+    </style>
+
+    <script>
+        // JavaScript to handle user input and send it to the backend
+        function sendMessage() {
+            var userInput = document.getElementById("user-input").value;
+            console.log(userInput);
+            
+            if (userInput.trim() === "") return; // Don't send empty messages
+            
+            var chatboxContent = document.getElementById("chatbox-content");
+
+            // Display user's message
+            var userMessage = document.createElement("div");
+            userMessage.classList.add("message", "user-message");
+            userMessage.textContent = userInput;
+            chatboxContent.appendChild(userMessage);
+
+            // Scroll to the bottom of the chatbox
+            chatboxContent.scrollTop = chatboxContent.scrollHeight;
+
+            // Clear input field
+            document.getElementById("user-input").value = "";
+
+            // Send a placeholder message to the backend instead of user input
+            fetch('/chatbot/', { // Adjust the URL to your backend endpoint
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ message: userInput }) 
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display bot response
+                var botResponse = document.createElement("div");
+                botResponse.classList.add("message", "bot-message");
+                botResponse.textContent = data.response; // Assuming the response has a 'response' field
+                chatboxContent.appendChild(botResponse);
+                chatboxContent.scrollTop = chatboxContent.scrollHeight;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}User Dashboard{% endblock %}</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Header */
+        header {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        /* Container */
+        .dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            padding: 20px;
+            height: 100vh;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            background-color: #444;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #28a745;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        /* Card Style */
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar div {
+            height: 20px;
+            background-color: #28a745;
+            width: 70%; /* Example of progress, change dynamically */
+            text-align: right;
+            color: white;
+            padding-right: 5px;
+            line-height: 20px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>{% block header %}Welcome to Your Fitness Dashboard{% endblock %}</h1>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h2>User Menu</h2>
+            <ul>
+                <li><a href="{% url 'user_profile' %}">My Profile</a></li>
+                <li><a href="">Workout Plan</a></li>
+                <li><a href="#">Diet Plan</a></li>
+                <li><a href="{% url 'user_progress' %}">Progress Tracker</a></li>
+                <li><a href="#">Upcoming Classes</a></li>
+                <li><a href="{% url 'chatbot' %}">Chat Bot</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+</body>
+
+</html>

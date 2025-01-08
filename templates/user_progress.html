@@ -1,0 +1,94 @@
+{% extends 'userbase.html' %}
+
+{% block title %}Gym Progress{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h3>Your Gym Progress</h3>
+        <div class="progress-item">
+            <h4>Cardio</h4>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 80%;">80%</div>
+                <div class="progress-text">80% Complete</div>
+            </div>
+        </div>
+
+        <div class="progress-item">
+            <h4>Strength Training</h4>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 65%;">65%</div>
+                <div class="progress-text">65% Complete</div>
+            </div>
+        </div>
+
+        <div class="progress-item">
+            <h4>Flexibility</h4>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 50%;">50%</div>
+                <div class="progress-text">50% Complete</div>
+            </div>
+        </div>
+
+        <div class="progress-item">
+            <h4>Overall Fitness Score</h4>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 75%;">75%</div>
+                <div class="progress-text">75% Complete</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Additional Details</h3>
+        <ul>
+            <li><strong>Workout Sessions Completed:</strong> 45</li>
+            <li><strong>Total Hours:</strong> 120 hours</li>
+            <li><strong>Calories Burned:</strong> 15,000 kcal</li>
+            <li><strong>Next Goal:</strong> 10k Run</li>
+        </ul>
+    </div>
+
+    <style>
+        .progress-item {
+            margin-bottom: 20px;
+        }
+
+        .progress-bar-container {
+            position: relative;
+            height: 30px;
+            background-color: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            position: absolute;
+            height: 100%;
+            background-color: #28a745;
+            width: 0;
+            line-height: 30px;
+            color: white;
+            text-align: center;
+            border-radius: 15px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .progress-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            line-height: 30px;
+            color: #555;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}

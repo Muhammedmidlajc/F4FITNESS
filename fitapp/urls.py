@@ -34,6 +34,12 @@ urlpatterns = [
   path('edit_trainer_details/<int:trainer_id>/', views.edit_trainer_details, name='edit_trainer_details'),
   path('delete_trainer_details/<int:trainer_id>/', views.delete_trainer, name='delete_trainer'),
 
+  path('logout/', views.logout_view, name='logout'),
+  path('user_profile/', views.user_profile, name='user_profile'),
+  path('user_progress/', views.user_progress, name='user_progress'),
+  path('chatbot/', views.chatbot, name='chatbot'),
+
+
   
  
 
