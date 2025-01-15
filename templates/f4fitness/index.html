@@ -73,7 +73,7 @@
                                     </li>
                                     {% comment %} <li><a href="admin_login">ADMIN</a></li> {% endcomment %}
                                     <li><a href="trainer_register">TRAINER</a></li>
-                                    <li><a href="register">REGISTRATION</a></li>
+                                    <li><a href="{% url  'register' %}">REGISTRATION</a></li>
                                 </ul>
                             </nav>
                         </div>          
@@ -290,8 +290,8 @@
                                 <img src={% static "img/icon/price.svg" %} alt="">
                             </div>
                             <div class="properties__caption">
-                                <span class="month">6 month</span>
-                                <p class="mb-25">$30/m  <span>(Single class)</span></p>
+                                <span class="month">1 month</span>
+                                <p class="mb-25">600  <span>(Single class)</span></p>
                                 <div class="single-features">
                                     <div class="features-icon">
                                         <img src={% static "img/icon/check.svg" %} alt="">
@@ -398,7 +398,7 @@
                                 <img src={% static "img/icon/price.svg" %} alt="">
                             </div>
                             <div class="properties__caption">
-                                <span class="month">6 month</span>
+                                <span class="month">1 Year</span>
                                 <p class="mb-25">$30/m  <span>(Single class)</span></p>
                                 <div class="single-features">
                                     <div class="features-icon">

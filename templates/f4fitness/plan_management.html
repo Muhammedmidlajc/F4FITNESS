@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007bff;
+            color: #fff;
+            padding: 15px 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .add-plan-btn {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .add-plan-btn:hover {
+            background-color: #218838;
+        }
+        .container {
+            padding: 20px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-content {
+            display: flex;
+            flex-direction: column;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 10px;
+        }
+        .card-details {
+            color: #6c757d;
+            font-size: 14px;
+            margin: 0;
+        }
+        .card-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .card-buttons button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .edit-btn {
+            background-color: #ffc107;
+            color: #fff;
+        }
+        .edit-btn:hover {
+            background-color: #e0a800;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+        .btn {
+            width: 70px;
+            height: 30px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Plan Management</h1>
+        <a class="add-plan-btn" href="{% url 'addplans'%}">Add Plan</a>
+    </div>
+    <div class="container">
+        {% for plan in plans %}
+        <div class="card">
+            <div class="card-content">
+                <h2 class="card-title">{{ plan.Name }}</h2>
+                <p class="card-details">DURATION: {{ plan.time_period }}</p>
+                <p class="card-details">FEE: {{ plan.price }}</p>
+                <p class="card-details">DESCRIPTION: {{ plan.descrption }}</p>
+            </div>
+            <div class="card-buttons">
+                <a href="{% url 'edit_plans' plan.id %}" class="edit-btn btn">Edit</a>
+                <a href="{% url 'delete_plan' plan.id  %}" class="delete-btn btn" style="width:70px" >Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

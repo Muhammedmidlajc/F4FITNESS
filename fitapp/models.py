@@ -17,11 +17,7 @@ class UserProfile(models.Model):
 
 class TrainerProfile(models.Model):
     name = models.CharField(max_length=100, default='Trainer')
-
-    username = models.CharField(max_length=60, default='default_username')
-
-    password = models.CharField(max_length=50, default='defaultpassword')
-
+    user = models.OneToOneField(User, on_delete=models.CASCADE,null=True,blank=True)
     dob = models.DateField(default='2000-01-01')
     address = models.TextField()
     phone_number = models.CharField(max_length=15)
@@ -31,7 +27,12 @@ class TrainerProfile(models.Model):
 
 
 
-
+class plan(models.Model):
+    Name = models.CharField(max_length=25)
+    time_period = models.CharField(max_length=25)
+    price = models.CharField(max_length=25)
+    descrption = models.CharField(max_length=100)
+    
 
 
     

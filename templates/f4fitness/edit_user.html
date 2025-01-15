@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            background-image: url('{% static "img/blog/fit1.png" %}'); /* Add your background image URL here */
+            
+            background-size: cover;
+            background-position: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: rgba(233, 236, 239, 0.8); /* Slightly transparent overlay */
+        }
+        .form-container {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 380px;
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 22px;
+            color: #333;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+        .form-container input,
+        .form-container textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .form-container input[type="file"] {
+            padding: 8px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .form-container button:hover {
+            background-color: #218838;
+        }
+        .form-container p {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .form-container p a {
+            color: #28a745;
+            text-decoration: none;
+        }
+        .form-container p a:hover {
+            text-decoration: underline;
+        }
+        .eye-icon {
+            position: absolute;
+            right: 15px;
+            top: 14px;
+            cursor: pointer;
+        }
+        .input-container {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>EDIT</h1>
+    </header>
+    <main>
+        <div class="form-container">
+            <h2>Create Your Account</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+
+                <label for="password">Password</label>
+                <div class="input-container">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <span class="eye-icon" onclick="togglePassword()">&#128065;</span>
+                </div>
+
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob" required>
+
+                <label for="address">Address</label>
+                <textarea id="address" name="address" placeholder="Enter your address" rows="3" required></textarea>
+
+                <label for="phone_number">Phone Number</label>
+                <input type="tel" id="phone_number" name="phone_number" placeholder="Enter your phone number" required>
+
+                <label for="image">Profile Picture</label>
+                <input type="file" id="image" name="image" accept="image/*">
+
+                <a href=""><button  type="submit">Update</button></a>
+            </form>
+            
+        </div>
+    </main>
+
+</body>
+</html>

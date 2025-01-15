@@ -8,6 +8,9 @@ from.models import TrainerProfile
 from django.shortcuts import get_object_or_404
 from.models import UserProfile
 from django.contrib.auth.models import User
+from.models import plan
+from .forms import PlanForm
+
 
 
 
@@ -36,7 +39,7 @@ def register(request):
                     user=User.objects.create_user(username=username,password=password)
                 except Exception as e:
                     print(e)
-                    render(request, 'f4fitness/register.html', {'form': form})
+                    render(request, 'f4fitness/register.html')
                 profile=form.save(commit=False)
                 profile.user=user
                 profile.save()
@@ -157,8 +160,19 @@ def user_dashboard(request):
 def trainer_register_view(request):
     if request.method == 'POST':
         form = TrainerProfileForm(request.POST, request.FILES)
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+
         if form.is_valid():
-            form.save()
+            try:
+                user=User.objects.create_user(username=username,password=password)
+            except Exception as e:
+                print(e)
+                render(request, 'f4fitness/register.html')
+
+            obj=form.save(commit=False)
+            obj.user=user
+            obj.save()
             messages.success(request, 'Registration successful! Please login.')
             return redirect('trainer_managment')
         else:
@@ -230,25 +244,70 @@ def user_management(request):
 def edit_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
     if request.method == 'POST':
-        form = UserForm(request.POST, instance=user)
+        form = UserProfileForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             return redirect('user_management')
     else:
-        form = UserForm(instance=user)
-    return render(request, 'edit_user.html', {'form': form})
+        form = UserProfileForm(instance=user)
+    return render(request, 'f4fitness/edit_user.html', {'form': form})
 
 def delete_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
+    user.delete()
+    return redirect('user_management')
+
+
+
+
+
+
+
+
+
+
+def plan_management(request):
+    plans = plan.objects.all()
+    return render(request, 'f4fitness/plan_management.html',{'plans':plans})
+
+
+def addplans(request):
+    from django.shortcuts import render, redirect
+from .forms import PlanForm
+
+def addplans(request):
     if request.method == 'POST':
-        user.delete()
-        return redirect('user_management')
-    return render(request, 'confirm_delete.html', {'user': user})
+        form = PlanForm(request.POST)
+        if form.is_valid():
+            form.save()
+        
+            return redirect('plan_management')  # Redirect to a success page after saving
+        else:
+            print(form.errors)
+    form = PlanForm()
+
+    return render(request, 'f4fitness/addplans.html', {'form': form})
+
+    
+
+def delete_plan(request, plan_id):
+    plan_obj = get_object_or_404(plan, id=plan_id)
+    plan_obj.delete()
+    return redirect('plan_management')
 
 
 
-
-
+def edit_plans(request, plan_id):
+    plan_1 = get_object_or_404(plan, id=plan_id)
+    print(plan_1)
+    if request.method == 'POST':
+        form = PlanForm(request.POST, instance=plan_1 )
+        if form.is_valid():
+            form.save()
+            return redirect('plan_management')
+    else:
+        form = PlanForm(instance=plan_1)
+    return render(request, 'f4fitness/edit_plans.html', {'plan': plan_1})
 
 
 
