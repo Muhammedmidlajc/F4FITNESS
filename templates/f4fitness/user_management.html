@@ -116,7 +116,7 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Username</th>
-                    <th>Email</th>
+                    <th>PHONE</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -125,8 +125,8 @@
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ user.name }}</td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.email }}</td>
+                    <td>{{ user.user }}</td>
+                    <td>{{ user.phone_number }}</td>
                     <td>
                         <a href="{% url 'edit_user' user.user.id %}" class="btn">Edit</a>
                         <a href="{% url 'delete_user' user.user.id %}" class="btn btn-delete">Delete</a>

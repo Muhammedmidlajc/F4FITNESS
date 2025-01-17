@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLANS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        .add-plan-btn {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+        }
+        .add-plan-btn:hover {
+            background-color: #218838;
+        }
+        .container {
+            padding: 30px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .card-details {
+            color: #6c757d;
+            font-size: 14px;
+            margin: 0;
+        }
+        .card-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .select-btn {
+            text-decoration: none;
+            text-align: center;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+        .select-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>CHOOSE A PLAN TO REGISTER</h1>
+    </div>
+    <div class="container">
+        <div class="grid">
+            {% for plan in plans %}
+            <div class="card">
+                <div class="card-content">
+                    <h2 class="card-title">{{ plan.Name }}</h2>
+                    <p class="card-details">Type: {{ plan.Type }}</p>
+                    <p class="card-details">DURATION: {{ plan.time_period }}</p>
+                    <p class="card-details">FEE: {{ plan.price }}</p>
+                    <p class="card-details">DESCRIPTION: {{ plan.descrption }}</p>
+                </div>
+                <div class="card-buttons">
+                    <a href="{% url  'register' %}" class="select-btn">Select</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

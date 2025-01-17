@@ -242,7 +242,7 @@ def user_management(request):
     return render(request, 'f4fitness/user_management.html', {'users': users})
 
 def edit_user(request, user_id):
-    user = get_object_or_404(User, id=user_id)
+    user = get_object_or_404(UserProfile, user__id=user_id)
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=user)
         if form.is_valid():
@@ -250,7 +250,7 @@ def edit_user(request, user_id):
             return redirect('user_management')
     else:
         form = UserProfileForm(instance=user)
-    return render(request, 'f4fitness/edit_user.html', {'form': form})
+    return render(request, 'f4fitness/edit_user.html', {'form': form,'user_profile':user})
 
 def delete_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
@@ -313,5 +313,7 @@ def edit_plans(request, plan_id):
 
 
 
-
+def userplan(request):
+    uplan = plan.objects.all()
+    return render(request, 'f4fitness/planview.html',{'plans':uplan})
 

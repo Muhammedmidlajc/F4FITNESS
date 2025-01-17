@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     name = models.CharField(max_length=100)
     user = models.OneToOneField(User, on_delete=models.CASCADE,null=True,blank=True)
+    plan = models.ForeignKey('plan', on_delete=models.CASCADE,null=True,blank=True)
     dob = models.DateField(default='2000-01-01')
     address = models.TextField()
     phone_number = models.CharField(max_length=15)
@@ -32,6 +33,8 @@ class plan(models.Model):
     time_period = models.CharField(max_length=25)
     price = models.CharField(max_length=25)
     descrption = models.CharField(max_length=100)
+    Type = models.CharField( max_length=50,blank=True, null=True)
+    
     
 
 
