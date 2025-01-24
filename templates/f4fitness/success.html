@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Success</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #84fab0, #8fd3f4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+            position: relative;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 400px;
+            animation: fadeIn 1.5s ease;
+            z-index: 2;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            z-index: 1;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(120deg, #84fab0, #8fd3f4);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        a:hover {
+            background: linear-gradient(120deg, #8fd3f4, #84fab0);
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const loader = document.querySelector('.loader');
+            const container = document.querySelector('.container');
+
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                container.style.display = 'block';
+            }, 2000); // Simulates a 2-second load time
+        });
+    </script>
+</head>
+<body>
+    <div class="loader"></div>
+    <div class="container" style="display: none;">
+        <h2>Payment Successful</h2>
+        <p>UPI ID: {{ payment.upi_id }}</p>
+        <p>Amount: ₹{{ payment.amount }}</p>
+        <a href="/payment/" class="btn btn-primary">Make Another Payment</a>
+    </div>
+</body>
+</html>

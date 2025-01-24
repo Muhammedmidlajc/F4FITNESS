@@ -10,6 +10,7 @@ from.models import UserProfile
 from django.contrib.auth.models import User
 from.models import plan
 from .forms import PlanForm
+from.models import Supplement
 
 
 
@@ -28,13 +29,14 @@ def trainer_management(request):
 
 
 
-def register(request):
+def register(request,plan_id):
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES)
         username=request.POST.get('username')
         password=request.POST.get('password')
 
         if form.is_valid():
+                plan_obj=get_object_or_404(plan,id=plan_id)
                 try:
                     user=User.objects.create_user(username=username,password=password)
                 except Exception as e:
@@ -42,6 +44,7 @@ def register(request):
                     render(request, 'f4fitness/register.html')
                 profile=form.save(commit=False)
                 profile.user=user
+                profile.plan=plan_obj
                 profile.save()
 
                 messages.success(request, 'Registration successful! Please login.')
@@ -151,7 +154,9 @@ def admin_dashboard_view(request):
     return render(request,'admin_dashboard.html')
 
 def user_dashboard(request):
-    return render(request, 'f4fitness/user_dashboard.html')
+    profile=UserProfile.objects.get(user=request.user)
+
+    return render(request, 'f4fitness/user_dashboard.html',{'user_data':profile})
 
 
 
@@ -317,3 +322,53 @@ def userplan(request):
     uplan = plan.objects.all()
     return render(request, 'f4fitness/planview.html',{'plans':uplan})
 
+
+
+
+
+
+
+def productmanagement(request):
+    product = Supplement.objects.all()
+    return render(request, 'f4fitness/productmanagement.html',{'product':product})
+
+from django.shortcuts import render, redirect
+from .forms import SupplementForm
+
+def addsupplement(request):
+    if request.method == 'POST':
+        form = SupplementForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('productmanagement')  # Create a success page or redirect
+    else:
+        form = SupplementForm()
+    return render(request, 'f4fitness/addsupplement.html', {'form': form})
+
+
+
+
+
+def about(request):
+    return render(request, 'f4fitness/about.html')
+
+
+
+
+
+
+
+
+
+
+from .forms import PaymentForm
+
+def payment_page(request,):
+    if request.method == 'POST':
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'f4fitness/success.html', {'payment': form.instance})
+    else:
+        form = PaymentForm()
+    return render(request, 'f4fitness/payment.html', {'form': form})

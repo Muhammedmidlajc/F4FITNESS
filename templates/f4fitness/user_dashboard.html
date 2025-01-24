@@ -3,35 +3,72 @@
 {% block title %}Dashboard Home{% endblock %}
 
 {% block content %}
-    <div class="card">
-        <h3>Welcome back, {{ user.username }}</h3>
-        <p>Today is a great day to stay fit and healthy. Check your workout progress below.</p>
-    </div>
-
-    <div class="card">
-        <h3>Workout Progress</h3>
-        <div class="progress-bar">
-            <div style="width: 70%;">70% Complete</div>
+    {% if False %}
+        <div class="card">
+            <h3>Welcome back, {{ user.username }}</h3>
+            <p>Today is a great day to stay fit and healthy. Check your workout progress below.</p>
         </div>
-        <p>You're doing great! Keep pushing toward your fitness goals.</p>
-    </div>
 
-    <div class="card">
-        <h3>Upcoming Classes</h3>
-        <ul>
-            <li>Yoga Class - 10:00 AM</li>
-            <li>HIIT Training - 2:00 PM</li>
-            <li>Pilates Class - 5:00 PM</li>
-        </ul>
-    </div>
+        <div class="card">
+            <h3>Workout Progress</h3>
+            <div class="progress-bar">
+                <div style="width: 70%;">70% Complete</div>
+            </div>
+            <p>You're doing great! Keep pushing toward your fitness goals.</p>
+        </div>
 
+        <div class="card">
+            <h3>Upcoming Classes</h3>
+            {% if upcoming_classes %}
+                <ul>
+                    {% for class in upcoming_classes %}
+                        <li>{{ class.name }} - {{ class.time }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No upcoming classes at the moment. Stay tuned!</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h3>Your Diet Plan</h3>
+            {% if diet_plan %}
+                <p>Today's meals include:</p>
+                <ul>
+                    {% for meal in diet_plan %}
+                        <li>{{ meal.name }}: {{ meal.details }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No diet plan available for today.</p>
+            {% endif %}
+        </div>
+    {% else %}
     <div class="card">
-        <h3>Your Diet Plan</h3>
-        <p>Today's meals include:</p>
-        <ul>
-            <li>Breakfast: Oats with fruits</li>
-            <li>Lunch: Grilled chicken with quinoa</li>
-            <li>Dinner: Salmon with steamed vegetables</li>
-        </ul>
+        <h3>Price:{{user_data.plan.price}}</h3>
+    
+        <p>No upcoming classes at the moment. Stay tuned!</p>
+        <p>Complete your payment to unlock exclusive classes and schedules.</p>
+        <a href="{% url 'payment_page'  %}" class="payment-btn">Make a Payment</a>
     </div>
+    {% endif %}
 {% endblock %}
+
+<!-- Add CSS styles for the progress bar -->
+<style>
+    .card {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .progress-bar {
+        background: #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+        height: 20px;
+        width: 100%;
+        margin: 10px 0;
+    }
+    .progress-bar

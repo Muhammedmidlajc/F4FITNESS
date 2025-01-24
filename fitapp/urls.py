@@ -9,7 +9,7 @@ urlpatterns = [
 
   # USER:-
   
-  path('register/', views.register, name='register'),
+  path('register/<int:plan_id>/', views.register, name='register'),
 
   path('login/', views.login_view, name='login'),
 
@@ -40,6 +40,12 @@ urlpatterns = [
   path('chatbot/', views.chatbot, name='chatbot'),
 
 
+
+  path('productmanagement/', views.productmanagement, name='productmanagement'),
+  path('add/', views.addsupplement, name='addsupplement'),
+
+
+
   
  
 
@@ -60,10 +66,22 @@ urlpatterns = [
  path('addplans/', views.addplans, name='addplans'),
  path('plan/delete/<int:plan_id>/', views.delete_plan, name='delete_plan'),
  path('plan/edit/<int:plan_id>/', views.edit_plans, name='edit_plans'),
-
-
-
  path('uplan/', views.userplan, name='uplan'),
 
 
+
+
+
+
+  path('about/', views.about, name='about'),
+
+
+
+  path('payment/', views.payment_page, name='payment_page'), 
+
 ]
+
+
+
+
+

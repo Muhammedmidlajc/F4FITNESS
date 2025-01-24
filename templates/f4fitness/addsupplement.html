@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Supplement</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e4f5 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .form-container {
+            background: #ffffff;
+            padding: 25px 35px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 8px rgba(0, 86, 179, 0.3);
+        }
+
+        button {
+            background: linear-gradient(135deg, #0056b3 0%, #007bff 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #004494 0%, #0056b3 100%);
+        }
+
+        .form-container input[type="file"] {
+            padding: 6px;
+            background: #f9f9f9;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add Supplement</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="id_name">Name:</label>
+            <input type="text" id="id_name" name="name" required maxlength="100">
+
+            <label for="id_price">Price:</label>
+            <input type="number" id="id_price" name="price" step="0.01" required>
+
+            <label for="id_description">Description:</label>
+            <textarea id="id_description" name="description" rows="4"></textarea>
+
+            <label for="id_image">Image:</label>
+            <input type="file" id="id_image" name="image" accept="image/*">
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

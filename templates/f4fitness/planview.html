@@ -110,7 +110,7 @@
                     <p class="card-details">DESCRIPTION: {{ plan.descrption }}</p>
                 </div>
                 <div class="card-buttons">
-                    <a href="{% url  'register' %}" class="select-btn">Select</a>
+                    <a href="{% url  'register' plan.id %}" class="select-btn">Select</a>
                 </div>
             </div>
             {% endfor %}

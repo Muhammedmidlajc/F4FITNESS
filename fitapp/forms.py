@@ -46,4 +46,28 @@ class PlanForm(forms.ModelForm):
 
 
 
+from django import forms
+from .models import Supplement
 
+class SupplementForm(forms.ModelForm):
+    class Meta:
+        model = Supplement
+        fields = ['name', 'price', 'description', 'image']
+
+
+
+
+
+
+
+
+from .models import Payment
+
+class PaymentForm(forms.ModelForm):
+    class Meta:
+        model = Payment
+        fields = ['upi_id', 'amount']
+        widgets = {
+            'upi_id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your UPI ID'}),
+            'amount': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter the amount'}),
+        }

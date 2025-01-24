@@ -35,7 +35,27 @@ class plan(models.Model):
     descrption = models.CharField(max_length=100)
     Type = models.CharField( max_length=50,blank=True, null=True)
     
+    def __str__(self):
+        return self.Name
+    
+
+class Supplement(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='supplements/images/', blank=True, null=True)
+
     
 
 
-    
+
+
+
+
+class Payment(models.Model):
+    upi_id = models.CharField(max_length=100)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Payment {self.id} - {self.upi_id} - {self.amount}"
