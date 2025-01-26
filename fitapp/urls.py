@@ -79,6 +79,14 @@ urlpatterns = [
 
   path('payment/', views.payment_page, name='payment_page'), 
 
+
+
+
+
+path('productview/', views.productview, name='productview'),
+
+
+
 ]
 
 

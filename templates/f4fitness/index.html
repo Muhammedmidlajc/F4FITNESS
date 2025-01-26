@@ -62,17 +62,17 @@
                                     <li><a href="{% url 'home' %}">Home</a></li>
                                     <li><a href="{% url 'about' %}">About</a></li>
                                     {% comment %} <li><a href="{% url  'uplan' %}">Courses</a></li> {% endcomment %}
-                                    <li><a href="pricing.html">Pricing</a></li>
-                                    <li><a href="">Products</a></li>
-                                    <li><a href="blog.html">Blog</a>
+                                    {% comment %} <li><a href="pricing.html">Pricing</a></li> {% endcomment %}
+                                    <li><a href="{% url 'productview' %}">Products</a></li>
+                                    {% comment %} <li><a href="blog.html">Blog</a>
                                         <ul class="submenu">
                                             <li><a href="blog.html">Blog</a></li>
                                             <li><a href="blog_details.html">Blog Details</a></li>
                                             <li><a href="elements.html">Elements</a></li>
                                         </ul>
-                                    </li>
+                                    </li> {% endcomment %}
                                     {% comment %} <li><a href="admin_login">ADMIN</a></li> {% endcomment %}
-                                    <li><a href="trainer_register">TRAINER</a></li>
+                                    {% comment %} <li><a href="trainer_register">TRAINER</a></li> {% endcomment %}
                                     <li><a href="{% url  'uplan' %}">REGISTRATION</a></li>
                                 </ul>
                             </nav>
@@ -290,14 +290,14 @@
                                 <img src={% static "img/icon/price.svg" %} alt="">
                             </div>
                             <div class="properties__caption">
-                                <span class="month">1 month</span>
-                                <p class="mb-25">600  <span>(Single class)</span></p>
+                                <span class="month">Basic plan</span>
+                                <p class="mb-25">Type <span>(Offline)</span></p>
                                 <div class="single-features">
                                     <div class="features-icon">
                                         <img src={% static "img/icon/check.svg" %} alt="">
                                     </div>
                                     <div class="features-caption">
-                                        <p>Free riding </p>
+                                        <p>Duration:1 Month</p>
                                     </div>
                                 </div>
                                 <div class="single-features">
@@ -305,15 +305,7 @@
                                         <img src={% static "img/icon/check.svg" %} alt="">
                                     </div>
                                     <div class="features-caption">
-                                        <p>Unlimited equipments</p>
-                                    </div>
-                                </div>
-                                <div class="single-features">
-                                    <div class="features-icon">
-                                        <img src="assets/img/icon/check.svg" alt="">
-                                    </div>
-                                    <div class="features-caption">
-                                        <p>Personal trainer</p>
+                                        <p>Fee:700</p>
                                     </div>
                                 </div>
                                 <div class="single-features">
@@ -324,15 +316,21 @@
                                         <p>Weight losing classes</p>
                                     </div>
                                 </div>
-                                <div class="single-features mb-20">
+                                <div class="single-features">
                                     <div class="features-icon">
                                         <img src="assets/img/icon/check.svg" alt="">
                                     </div>
                                     <div class="features-caption">
-                                        <p>Month to mouth</p>
+                                        <p>Description:Beginner Friendly Exclude Cardio</p>
                                     </div>
                                 </div>
-                                <a href="#" class="border-btn border-btn2">Join Now</a>
+                                <div class="single-features mb-20">
+                                    <div class="features-icon">
+                                        <img src="assets/img/icon/check.svg" alt="">
+                                    </div>
+                                    
+                                </div>
+                                <a href="" class="border-btn border-btn2">Join Now</a>
                             </div>
                         </div>
                     </div>

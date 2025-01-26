@@ -372,3 +372,13 @@ def payment_page(request,):
     else:
         form = PaymentForm()
     return render(request, 'f4fitness/payment.html', {'form': form})
+
+
+
+
+
+
+
+def productview(request):
+    product = Supplement.objects.all()
+    return render(request, 'f4fitness/productview.html',{'product':product})
