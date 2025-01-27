@@ -107,23 +107,24 @@
         <a class="add-Supplement-btn" href="{% url 'addsupplement' %}">Add Products</a>
     </div>
     <div class="container">
-        {% for Supplement in product %} 
+        {% for supplement in product %}
         <div class="card">
-            {% if Supplement.image %}
-            <img src="{{ Supplement.image.url }}" alt="{{ Supplement.name }}">
+            {% if supplement.image %}
+            <img src="{{ supplement.image.url }}" alt="{{ supplement.name }}">
             {% else %}
             <img src="https://via.placeholder.com/300x200?text=No+Image" alt="No Image Available">
             {% endif %}
-            <h2 class="card-title">{{ Supplement.name }}</h2>
-            <p class="card-details">Price: {{ Supplement.price }}</p>
-            <p class="card-details">Description: {{ Supplement.description }}</p>
+            <h2 class="card-title">{{ supplement.name }}</h2>
+            <p class="card-details">Price: {{ supplement.price }}</p>
+            <p class="card-details">Description: {{ supplement.description }}</p>
             <div class="card-buttons">
-                <a href="" class="edit-btn">Edit</a>
-                <a href="" class="delete-btn">Delete</a>
+                <a href="{% url 'edit_supplement' supplement.id %}" class="edit-btn">Edit</a>
+                <a href="{% url 'delete_supplement' supplement.id %}" class="delete-btn">Delete</a>
             </div>
         </div>
-        {% endfor %} 
+        {% endfor %}
     </div>
+    
     
 </body>
 </html>

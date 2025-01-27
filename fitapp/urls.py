@@ -43,13 +43,10 @@ urlpatterns = [
 
   path('productmanagement/', views.productmanagement, name='productmanagement'),
   path('add/', views.addsupplement, name='addsupplement'),
-
-
+  path('edit/<int:supplement_id>/', views.edit_supplement, name='edit_supplement'),
+  path('delete/<int:supplement_id>/', views.delete_supplement, name='delete_supplement'),
 
   
- 
-
-
 
 
 

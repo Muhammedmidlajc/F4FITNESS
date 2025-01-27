@@ -11,6 +11,8 @@ from django.contrib.auth.models import User
 from.models import plan
 from .forms import PlanForm
 from.models import Supplement
+from .forms import SupplementForm
+
 
 
 
@@ -382,3 +384,37 @@ def payment_page(request,):
 def productview(request):
     product = Supplement.objects.all()
     return render(request, 'f4fitness/productview.html',{'product':product})
+
+
+
+
+
+
+def edit_supplement(request, supplement_id):
+    supplement_1 = get_object_or_404(Supplement, id=supplement_id)  # Fetch the specific supplement
+    if request.method == "POST":
+        form = SupplementForm(request.POST, request.FILES, instance=supplement_1)
+        if form.is_valid():
+            form.save()  # Save the updated supplement details
+            return redirect('productmanagement')  # Redirect to the product management page
+    else:
+        form = SupplementForm(instance=supplement_1)  # Pre-fill form with existing data
+    return render(request, 'f4fitness/edit_supplement.html', {'form': form, 'supplement': supplement_1})
+
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages  # For optional success messages
+from .models import Supplement
+
+def delete_supplement(request, supplement_id):
+    supplement = get_object_or_404(Supplement, id=supplement_id)
+    if request.method == "POST":
+        supplement.delete()  # Delete the supplement
+        messages.success(request, "Supplement deleted successfully.")  # Optional
+        return redirect('productmanagement')  # Redirect to the product management page
+    return render(request, 'f4fitness/confirm_delete_supplement.html', {'supplement': supplement})
+
+
+
+
+
