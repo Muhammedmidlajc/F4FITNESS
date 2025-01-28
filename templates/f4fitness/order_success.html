@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .card-success {
+            background-color: #e9f9e9;
+        }
+        .btn-home {
+            background-color: #4CAF50;
+            border: none;
+        }
+        .btn-home:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-center">
+            <div class="card card-success text-center p-4" style="width: 24rem;">
+                <div class="card-body">
+                    <h3 class="card-title text-success">🎉 Order Successful!</h3>
+                    <p class="card-text mt-3">Thank you for your purchase!</p>
+                    <p class="card-text"><strong>Payment Amount:</strong> ₹{{ product.price }}</p>
+                    <hr>
+                    <p class="text-muted">Your order has been placed successfully.</p>
+                    <a href="{% url 'home' %}" class="btn btn-home w-100 mt-3">Go Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

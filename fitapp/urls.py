@@ -80,12 +80,24 @@ urlpatterns = [
 
 
 
-path('productview/', views.productview, name='productview'),
+  path('productview/', views.productview, name='productview'),
+
+
+
+
+  path('', views.product_list, name='product_list'),
+  path('customer-form/<int:product_id>/', views.customer_form, name='customer_form'),
+
+
+ path('customer-form/<int:product_id>/', views.customer_form, name='customer_form'),
+ path('order-success/', views.order_success, name='order_success'), 
+
+  
+ 
 
 
 
 ]
-
 
 
 

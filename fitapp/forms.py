@@ -71,3 +71,7 @@ class PaymentForm(forms.ModelForm):
             'upi_id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your UPI ID'}),
             'amount': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter the amount'}),
         }
+
+
+
+

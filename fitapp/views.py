@@ -202,10 +202,10 @@ def trainer_login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, 'Login successful!')
-            return render(request, 'trainer_login.html', {'login_success': True})
+            return render(request, 'f4fitness/trainer_dashboard.html', {'login_success': True})
         else:
             messages.error(request, 'Invalid username or password')
-            return redirect('trainer_dashboard')  
+            return redirect('trainer_login')  
 
     return render(request, 'f4fitness/trainer_login.html')
 
@@ -413,6 +413,55 @@ def delete_supplement(request, supplement_id):
         messages.success(request, "Supplement deleted successfully.")  # Optional
         return redirect('productmanagement')  # Redirect to the product management page
     return render(request, 'f4fitness/confirm_delete_supplement.html', {'supplement': supplement})
+
+
+
+
+
+
+
+
+
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import CustomerOrder
+from django.http import HttpResponse
+
+def product_list(request):
+    products = Supplement.objects.all()
+    return render(request, 'product_list.html', {'product': products})
+
+def customer_form(request, product_id):
+    product = get_object_or_404(Supplement, id=product_id)
+    if request.method == "POST":
+        name = request.POST.get('name')
+        phone_number = request.POST.get('phone_number')
+        address = request.POST.get('address')
+        upi_id = request.POST.get('upi_id')
+        payment_mode = request.POST.get('payment_mode')
+        
+        CustomerOrder.objects.create(
+            name=name,
+            phone_number=phone_number,
+            address=address,
+            upi_id=upi_id,
+            payment_mode=payment_mode,
+            product=product,
+            price=product.price
+        )
+        return HttpResponse("Order placed successfully!")
+
+    return render(request, 'f4fitness/customer_form.html', {'product': product})
+
+
+
+
+
+
+
+def order_success(request):
+    return render(request, 'f4fitness/order_success.html',)
+
+
 
 
 

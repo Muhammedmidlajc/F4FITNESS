@@ -109,7 +109,8 @@
             <p class="card-details">Price: {{ Supplement.price }}</p>
             <p class="card-details">Description: {{ Supplement.description }}</p>
             <div class="card-buttons">
-                <a href="" class="buy-btn">Buy Now</a>
+                <a href="{% url 'customer_form' Supplement.id %}" class="buy-btn">Buy Now</a>
+
             </div>
         </div>
         {% endfor %} 
