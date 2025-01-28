@@ -104,7 +104,7 @@
             setTimeout(() => {
                 loader.classList.add('hidden');
                 container.style.display = 'block';
-            }, 2000); // Simulates a 2-second load time
+            }, 1000); // Simulates a 2-second load time
         });
     </script>
 </head>
@@ -114,7 +114,7 @@
         <h2>Payment Successful</h2>
         <p>UPI ID: {{ payment.upi_id }}</p>
         <p>Amount: ₹{{ payment.amount }}</p>
-        <a href="/payment/" class="btn btn-primary">Make Another Payment</a>
+        <a href="{% url 'user_dashboard' %}" class="btn btn-primary">Back to Dashboard</a>
     </div>
 </body>
 </html>

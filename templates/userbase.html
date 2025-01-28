@@ -117,7 +117,7 @@
     <div class="dashboard-container">
         <div class="sidebar">
             <h2>User Menu</h2>
-            {% if False %}
+            {% if user_data.paid %}
             <ul>
                 <li><a href="{% url 'user_profile' %}">My Profile</a></li>
                 <li><a href="">Workout Plan</a></li>

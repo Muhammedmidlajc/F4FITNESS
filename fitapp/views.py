@@ -12,6 +12,7 @@ from.models import plan
 from .forms import PlanForm
 from.models import Supplement
 from .forms import SupplementForm
+from.models import *
 
 
 
@@ -356,24 +357,19 @@ def about(request):
 
 
 
-
-
-
-
-
-
-
-from .forms import PaymentForm
-
-def payment_page(request,):
+def payment_page(request):
+    profile=UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
-        form = PaymentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return render(request, 'f4fitness/success.html', {'payment': form.instance})
-    else:
-        form = PaymentForm()
-    return render(request, 'f4fitness/payment.html', {'form': form})
+        plan=profile.plan
+        amount=plan.price
+        upi=request.POST.get('upi')
+        payment = Payment.objects.create( profile=profile, amount=amount,upi_id=upi)
+        
+        if payment:
+            profile.paid=True
+            profile.save()
+        return render(request, 'f4fitness/success.html', {'payment': payment})
+    return render(request, 'f4fitness/payment.html',{'plan':profile.plan})
 
 
 

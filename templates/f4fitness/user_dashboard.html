@@ -3,7 +3,7 @@
 {% block title %}Dashboard Home{% endblock %}
 
 {% block content %}
-    {% if False %}
+    {% if user_data.paid %}
         <div class="card">
             <h3>Welcome back, {{ user.username }}</h3>
             <p>Today is a great day to stay fit and healthy. Check your workout progress below.</p>
@@ -45,16 +45,16 @@
         </div>
     {% else %}
     <div class="card">
-        <h3>Price:{{user_data.plan.price}}</h3>
+        <h3>Price: {{ user_data.plan.price }}</h3>
     
         <p>No upcoming classes at the moment. Stay tuned!</p>
         <p>Complete your payment to unlock exclusive classes and schedules.</p>
-        <a href="{% url 'payment_page'  %}" class="payment-btn">Make a Payment</a>
+        <a href="{% url 'payment_page' %}" class="payment-btn stylish-button">Make a Payment</a>
     </div>
     {% endif %}
 {% endblock %}
 
-<!-- Add CSS styles for the progress bar -->
+<!-- Add CSS styles for the progress bar and stylish button -->
 <style>
     .card {
         background: #ffffff;
@@ -71,4 +71,21 @@
         width: 100%;
         margin: 10px 0;
     }
-    .progress-bar
+    .payment-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .payment-btn:hover {
+        background-color: #0056b3;
+    }
+    .payment-btn:active {
+        background-color: #004085;
+    }
+</style>

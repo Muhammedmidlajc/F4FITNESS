@@ -107,11 +107,11 @@
                 {% csrf_token %}
                 <div class="input-group">
                     <label for="upi-id">UPI ID</label>
-                    <input type="text" id="upi-id" name="upi_id" placeholder="Enter your UPI ID" required>
+                    <input type="text" id="upi-id" name="upi" placeholder="Enter your UPI ID" required>
                 </div>
                 <div class="input-group">
                     <label for="amount">Amount</label>
-                    <input type="number" id="amount" name="amount" placeholder="Enter the amount" required>
+                    <input value="{{plan.price}}" type="number" id="amount" name="amount" disabled placeholder="Enter the amount" required>
                 </div>
                 <button type="submit">Pay Now</button>
             </form>

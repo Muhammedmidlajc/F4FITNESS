@@ -12,7 +12,7 @@ class UserProfile(models.Model):
     phone_number = models.CharField(max_length=15)
     image = models.ImageField(upload_to='profile_images/')
     image1 = models.ImageField(upload_to='profile_images/', default='profile_images/default.png')
-
+    paid=models.BooleanField(default=False)
 
 
 
@@ -53,6 +53,7 @@ class Supplement(models.Model):
 
 
 class Payment(models.Model):
+    profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE,null=True,blank=True)
     upi_id = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
