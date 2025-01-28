@@ -373,6 +373,37 @@ def payment_page(request):
 
 
 
+def trainer_profile(request):
+    profile = get_object_or_404(TrainerProfile, user=request.user)
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        name = request.POST.get('name')
+        dob = request.POST.get('dob')
+        address = request.POST.get('address')
+        phone_number = request.POST.get('phone_number')
+        image = request.FILES.get('image')
+
+        # Update user model
+        if username :
+            request.user.username = username
+        if password:
+            request.user.set_password(password)
+        request.user.save()
+
+        # Update user profile
+        profile.name = name
+        profile.dob = dob
+        profile.address = address
+        profile.phone_number = phone_number
+        if image:
+            profile.image = image
+        profile.save()
+
+        messages.success(request, 'Profile updated successfully!')
+        return redirect('trainer_profile')
+    return render(request, 'trainer_profile.html', {'profile': profile})
 
 
 

@@ -7,8 +7,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Dashboard{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4; /* Updated background color for a more professional look */
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #007bff; /* Updated navbar color for a more professional appearance */
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #495057; /* Updated sidebar color for a more professional look */
+            color: white;
+            padding: 20px;
+            height: 100%;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+        .sidebar ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .sidebar ul li a:hover {
+            background-color: #6c757d; /* Kept hover color for consistency */
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
+    <div class="navbar">
+        <h1>Admin Dashboard</h1>
+    </div>
     <div class="container">
         <div class="sidebar">
             <h2>Dashboard</h2>
@@ -16,7 +77,7 @@
                 <li><a href="#">Dashboard</a></li>
                 <li><a href="{% url 'trainer_managment' %}">Trainer</a></li>
                 <li><a href="{% url 'user_management' %}">Users</a></li>
-                <li><a href="{% url 'plan_management' %}">plans</a></li>
+                <li><a href="{% url 'plan_management' %}">Plans</a></li>
                 <li><a href="{% url 'productmanagement' %}">Products</a></li>
                 <li><a href="#">Settings</a></li>
                 <li><a href="">Logout</a></li>

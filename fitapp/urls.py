@@ -91,6 +91,7 @@ urlpatterns = [
 
  path('customer-form/<int:product_id>/', views.customer_form, name='customer_form'),
  path('order-success/', views.order_success, name='order_success'), 
+ path('trainer_profile/', views.trainer_profile, name='trainer_profile'), 
 
   
  
