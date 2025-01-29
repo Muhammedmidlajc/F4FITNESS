@@ -64,8 +64,6 @@ class Payment(models.Model):
 
 
 
-
-
 class CustomerOrder(models.Model):
     name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=15)
@@ -79,3 +77,12 @@ class CustomerOrder(models.Model):
         return self.name
 
 
+class Session(models.Model):
+    title=models.CharField(max_length=255,null=True,blank=True)
+    plan = models.ForeignKey('Plan', on_delete=models.CASCADE)
+    trainer = models.ForeignKey('TrainerProfile', on_delete=models.CASCADE,null=True,blank=True)
+    time = models.CharField(max_length=100,null=True,blank=True)
+    duration = models.IntegerField(null=True,blank=True)
+
+    def __str__(self):
+        return f"Session for {self.plan.Name} with {self.trainer.name}"

@@ -28,6 +28,9 @@ urlpatterns = [
   path('trainer_register/', views.trainer_register_view, name='trainer_register'),
 
   path('trainer_login/', views.trainer_login_view, name='trainer_login'),
+  path('trainer_dashboard/', views.trainer_dashboard, name='trainer_dashboard'),
+  path('trainer_plan/', views.trainer_plan, name='trainer_plan'),
+
 
   path('trainer_dashboard/', views.trainer_dashboard_view, name='trainer_dashboard'),
   path('trainer_managment/', views.trainer_management, name='trainer_managment'),
@@ -92,10 +95,9 @@ urlpatterns = [
  path('customer-form/<int:product_id>/', views.customer_form, name='customer_form'),
  path('order-success/', views.order_success, name='order_success'), 
  path('trainer_profile/', views.trainer_profile, name='trainer_profile'), 
-
-  
- 
-
+ path('manage_sessions/<int:plan_id>/', views.manage_sessions, name='manage_sessions'), 
+ path('delete_sessions/<int:session_id>/', views.delete_session, name='delete_session'), 
+ path('trainer_clients/',views.trainer_clients,name='trainer_clients')
 
 
 ]

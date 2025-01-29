@@ -13,10 +13,7 @@ from .forms import PlanForm
 from.models import Supplement
 from .forms import SupplementForm
 from.models import *
-
-
-
-
+from .models import Session
 
 
 
@@ -191,6 +188,12 @@ def trainer_register_view(request):
     return render(request, 'f4fitness/trainer_register.html', {'form': form})
 
 
+def trainer_dashboard(request):
+    return render(request,'f4fitness/trainer_dashboard.html')
+
+def trainer_plan(request):
+    plans = plan.objects.all()
+    return render(request, 'trainer_plan.html', {'plans': plans})
 
 
 def trainer_login_view(request):
@@ -203,7 +206,7 @@ def trainer_login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, 'Login successful!')
-            return render(request, 'f4fitness/trainer_dashboard.html', {'login_success': True})
+            return redirect('trainer_dashboard')
         else:
             messages.error(request, 'Invalid username or password')
             return redirect('trainer_login')  
@@ -413,8 +416,29 @@ def productview(request):
     return render(request, 'f4fitness/productview.html',{'product':product})
 
 
+def manage_sessions(request, plan_id):
+    sessions = Session.objects.filter(plan__id=plan_id)
+    if request.method == 'POST':
+        time = request.POST.get('time')
+        duration = request.POST.get('duration')
+        title = request.POST.get('title')
+        trainer = request.user.trainerprofile 
+        new_session = Session(plan_id=plan_id,title=title ,time=time, duration=duration, trainer=trainer)
+        new_session.save()
+        messages.success(request, 'Session added successfully!')
+        return redirect('manage_sessions', plan_id=plan_id)
+    return render(request, 'sessions.html', {'sessions': sessions, 'plan_id': plan_id})
 
 
+def delete_session(request, session_id):
+    session = get_object_or_404(Session, id=session_id)
+    session.delete() 
+    messages.success(request, "Session deleted successfully.")  
+    return redirect('manage_sessions', plan_id=session.plan.id) 
+
+
+def trainer_clients(request):
+    return render(request,'trainer_clients.html')
 
 
 def edit_supplement(request, supplement_id):

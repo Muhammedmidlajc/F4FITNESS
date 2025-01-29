@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLANS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-bottom: 4px solid #0056b3;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 1px;
+        }
+        .add-plan-btn {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .add-plan-btn:hover {
+            background-color: #218838;
+        }
+        .container {
+            padding: 40px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .card-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 0;
+            color: #343a40;
+        }
+        .card-details {
+            color: #6c757d;
+            font-size: 16px;
+            margin: 0;
+        }
+        .card-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+        }
+        .select-btn {
+            text-decoration: none;
+            text-align: center;
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+        .select-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="header" >
+        <h1 style="text-align: center;">PLANS</h1>
+    </div>
+    <div class="container">
+        <div class="grid">
+            {% for plan in plans %}
+            <div class="card">
+                <div class="card-content">
+                    <h2 class="card-title">{{ plan.Name }}</h2>
+                    <p class="card-details">Type: {{ plan.Type }}</p>
+                    <p class="card-details">DURATION: {{ plan.time_period }}</p>
+                    <p class="card-details">FEE: {{ plan.price }}</p>
+                    <p class="card-details">DESCRIPTION: {{ plan.descrption }}</p>
+                </div>
+                <div class="card-buttons">
+                    <a href="{% url  'manage_sessions' plan.id %}" class="select-btn">Sessions</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

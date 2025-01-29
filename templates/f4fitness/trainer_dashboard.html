@@ -13,8 +13,7 @@
             background-color: #f4f4f9;
             color: #333;
             display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
+            flex-direction: column; /* Changed to column for footer positioning */
             height: 100vh;
         }
 
@@ -62,6 +61,9 @@
             width: calc(100% - 220px); /* Ensures the content area fills the remaining width */
             text-align: center;
             flex-grow: 1;
+            display: flex;
+            flex-direction: column; /* Changed to column for footer positioning */
+            justify-content: space-between; /* Ensures footer stays at the bottom */
         }
 
         .header h1 {
@@ -104,7 +106,7 @@
 
         /* Footer */
         .footer {
-            margin-top: 20px;
+            margin-top: auto; /* Pushes footer to the bottom */
             font-size: 14px;
             color: #777;
         }
@@ -115,10 +117,9 @@
         <h2>Trainer Dashboard</h2>
         <a href="#" class="active">Dashboard</a>
         <a href="{% url 'trainer_profile' %}">My Profile</a>
-        <a href="#">Sessions</a>
-        <a href="#">Clients</a>
+        <a href="{% url 'trainer_plan' %}">Sessions</a>
+        <a href="{% url 'trainer_clients' %}">Clients</a>
         <a href="#">Reports</a>
-        <a href="#">Settings</a>
     </div>
 
     <div class="main-content">
