@@ -1,0 +1,129 @@
+{% extends 'userbase.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title" style="font-family: 'Arial', sans-serif;">🏋️ Session: {{ session.session.title }}</h1>
+    
+    <div class="classroom-layout">
+        <!-- Video Section -->
+        <div class="video-section">
+            <div class="video-player">
+                <iframe 
+                    width="100%" 
+                    height="400" 
+                    src="https://youtu.be/kqtD5dpn9C8?si=zdImqhOH2ejtCbyj" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="session-details">
+                <h2 style="font-family: 'Arial', sans-serif;">Session Details</h2>
+                <p style="font-family: 'Arial', sans-serif;"><strong>Trainer:</strong> {{ session.session.trainer.name }}</p>
+                <p style="font-family: 'Arial', sans-serif;"><strong>Time:</strong> {{ session.session.time }}</p>
+                <p style="font-family: 'Arial', sans-serif;"><strong>Duration:</strong> {{ session.session.duration }} minutes</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark Completed Button -->
+    <div style="text-align: right; margin-top: 20px;">
+        <button id="mark-completed-btn" 
+            style="padding: 10px 20px; background-color: #dc3545; color: white; border: none; border-radius: 5px; font-size: 14px; pointer-events: none; cursor: pointer;" 
+            disabled>
+            <a id="mark-completed-link" href="#" style="text-decoration: none; color: white;">Disabled</a>
+        </button>
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    .page-title {
+        text-align: center;
+        color: #28a745;
+        font-size: 36px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        font-family: 'Arial', sans-serif;
+    }
+    .classroom-layout {
+        display: flex;
+        gap: 20px;
+    }
+    .video-section {
+        flex: 2;
+    }
+    .video-player {
+        background: #000;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+    .session-details {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .session-details h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+        color: #343a40;
+    }
+    .session-details p {
+        font-size: 16px;
+        color: #495057;
+        margin: 5px 0;
+    }
+</style>
+
+<script>
+    const sessionDuration = parseInt('{{ session.session.duration }}') * 60; 
+    const halfDuration = sessionDuration / 2; 
+    let timeSpent = parseInt('{{ prev_duration }}'); 
+
+    const markCompletedBtn = document.getElementById('mark-completed-btn');
+    const markCompletedLink = document.getElementById('mark-completed-link');
+
+    // Start a timer to track time spent
+    const timer = setInterval(() => {
+        timeSpent += 1;
+        console.log("Time Spent:", timeSpent);
+
+        const sessionId = "{{ session.id }}"; 
+        const data = {
+            sessionId: sessionId,
+            timeSpent: timeSpent,
+        };
+
+        fetch('/save_session_progress/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}', 
+            },
+            body: JSON.stringify(data),
+        })
+        .catch(error => console.error('Error saving session progress:', error));
+
+        if (timeSpent >= halfDuration) {
+            markCompletedBtn.disabled = false;
+            markCompletedBtn.style.backgroundColor = '#28a745';
+            markCompletedBtn.style.pointerEvents = 'auto';
+
+            // Update button link and text
+            markCompletedLink.href = "{% url 'session_status_update' %}"
+            markCompletedLink.innerText = "Mark Completed";
+
+            clearInterval(timer); 
+        }
+    }, 1000);
+</script>
+{% endblock %}

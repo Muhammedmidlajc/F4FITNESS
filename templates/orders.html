@@ -1,0 +1,98 @@
+{% extends 'userbase.html' %}
+
+{% block title %}Purchase History{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">🛒 Purchase History</h1>
+    <div class="purchase-history">
+        {% if purchase_history %}
+            <ul class="history-list">
+                {% for order in purchase_history %}
+                <li class="history-item">
+                    <div class="order-details">
+                        <h3>🆔 Order ID: <span class="order-id">{{ order.id }}</span></h3>
+                        <p>📅 Date: <span class="order-date">{{ order.purchase_date }}</span></p>
+                        <p>✅ Status: <span class="order-status">Success</span></p>
+                        <div class="order-items">
+                            <h4>📦 Items:</h4>
+                            <ul>
+                                {% for item in order.supplements.all %}
+                                <li>
+                                    <span class="item-name">🎁 {{ item.supplement.name }}</span>
+                                    <span class="item-quantity">🔢 x{{ item.supplement.quantity }}</span>
+                                    <span class="item-price">💲{{ item.supplement.price }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="total-price">
+                            <h3>💰 Total Amount: <span class="price">${{ order.total_amount }}</span></h3>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-history-message">🚫 You have no purchase history yet.</p>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    body {
+        background: white;
+        font-family: 'Arial', sans-serif;
+    }
+    .container {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 25px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .page-title {
+        color: #ff5733;
+        font-size: 30px;
+        text-align: center;
+    }
+    .purchase-history {
+        margin-top: 25px;
+    }
+    .history-list {
+        list-style-type: none;
+        padding: 0;
+    }
+    .history-item {
+        background: linear-gradient(135deg, #f8ffae, #43cea2);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+    .history-item:hover {
+        transform: scale(1.03);
+    }
+    .order-details h3 {
+        margin: 0;
+        color: #2c3e50;
+        font-weight: bold;
+    }
+    .order-items {
+        margin-top: 15px;
+        padding-left: 10px;
+    }
+    .total-price h3 {
+        color: #e74c3c;
+        font-size: 22px;
+    }
+    .empty-history-message {
+        text-align: center;
+        font-size: 1.5rem;
+        color: #777;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}

@@ -359,7 +359,7 @@ def about(request):
     return render(request, 'f4fitness/about.html')
 
 
-
+import datetime
 def payment_page(request):
     profile=UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
@@ -369,7 +369,11 @@ def payment_page(request):
         payment = Payment.objects.create( profile=profile, amount=amount,upi_id=upi)
         
         if payment:
-            profile.paid=True
+            sessions = Session.objects.filter(plan=plan).order_by('order')
+            for session in sessions:
+                UserSession.objects.create(session=session, user=profile, date_completed=datetime.datetime.now(), order=session.order)
+
+            profile.paid = True
             profile.save()
         return render(request, 'f4fitness/success.html', {'payment': payment})
     return render(request, 'f4fitness/payment.html',{'plan':profile.plan})
@@ -436,9 +440,159 @@ def delete_session(request, session_id):
     messages.success(request, "Session deleted successfully.")  
     return redirect('manage_sessions', plan_id=session.plan.id) 
 
+def user_products(request):
+    products = Supplement.objects.all()
+    return render(request, 'user_products.html', {'supplements': products})
+
+
+def cart_view(request):
+    cart_items = request.session.get('cart_items', [])
+    total_price = sum(float(item['price']) * item['quantity'] for item in cart_items)
+    return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
+
+
+def add_to_cart(request):
+    item_id = request.GET.get('item_id', None)
+    decrease = request.GET.get('decrease', False)
+    remove = request.GET.get('remove', False)
+    if item_id:
+        product = get_object_or_404(Supplement, id=item_id)
+        cart_items = request.session.get('cart_items', [])
+        
+        product_price = float(product.price)
+        image = product.image.url
+        
+        existing_item = next((item for item in cart_items if item['id'] == product.id), None)
+        if remove: 
+            if existing_item:
+                cart_items.remove(existing_item)  
+                messages.success(request, f'{product.name} has been removed from your cart.')
+        elif existing_item:
+            if decrease: 
+                existing_item['quantity'] -= 1
+                if existing_item['quantity'] <= 0:
+                    cart_items.remove(existing_item)
+            else:
+                existing_item['quantity'] += 1
+        else:
+            cart_item = {
+                'id': product.id,
+                'name': product.name,
+                'price': product_price, 
+                'quantity': 1,
+                'image':image
+            }
+            cart_items.append(cart_item)
+        
+        request.session['cart_items'] = cart_items
+        if not decrease and not remove:
+            messages.success(request, f'{product.name} has been added to your cart.')
+    return redirect('cart_view')
+
+def product_payment(request):
+    cart_items = request.session.get('cart_items', [])
+    total_price = sum(float(item['price']) * item['quantity'] for item in cart_items)
+    return render(request, 'product_payment.html', {'cart_items': cart_items, 'total_price': total_price})
+
+
+def proceed_payment(request):
+    if request.method == "POST":
+        cart_items = request.session.get('cart_items', [])
+        user = get_object_or_404(UserProfile, user=request.user)
+        total_price = sum(float(item['price']) * item['quantity'] for item in cart_items)
+        quantity_list = []
+
+        for item in cart_items:
+            product = get_object_or_404(Supplement, id=item['id'])
+            obj = ProductWithQuantity.objects.create(supplement=product, quantity=item['quantity'])
+            quantity_list.append(obj)
+
+        payment_method = request.POST.get('payment_method')
+        if payment_method == 'card':
+            card_number = request.POST.get('card_number')
+            expiry_date = request.POST.get('expiry_date')
+            cvv = request.POST.get('cvv')
+            cardholder_name = request.POST.get('cardholder_name')
+            payment = BuyHistory.objects.create(user=user, total_amount=total_price,card_number=card_number,expiry_date=expiry_date,cardholder_name=cardholder_name,cvv=cvv,payment_method='card')
+        
+        elif payment_method == 'upi':
+            upi_id = request.POST.get('upi_id')
+            payment = BuyHistory.objects.create(user=user, total_amount=total_price,upi_id=upi_id,payment_method='upi')
+
+        payment.supplements.add(*quantity_list)
+        request.session['cart_items'] = [] 
+        messages.success(request, "Your cart has been cleared.")
+        return redirect('payment_success')
+    
+    return redirect('product_payment')
+
+
+def payment_success(request):
+    cart_items = request.session.get('cart_items', [])
+    total_price = sum(float(item['price']) * item['quantity'] for item in cart_items)
+    return render(request, 'payment_success.html', {'cart_items': cart_items, 'total_price': total_price})
+
+def order_history(request):
+    user = get_object_or_404(UserProfile, user=request.user)
+    purchase_history = BuyHistory.objects.filter(user=user).order_by('-purchase_date')
+    return render(request, 'orders.html', {'purchase_history': purchase_history})
+
+def user_diet_plan(request):
+    return render(request, 'user_diet_plan.html')
+
 
 def trainer_clients(request):
     return render(request,'trainer_clients.html')
+
+
+def user_sessions(request):
+    user = get_object_or_404(UserProfile, user=request.user)
+    all_sessions=UserSession.objects.filter(user=user)
+    upcoming_sessions = all_sessions.filter(status='upcoming')
+    completed_sessions = all_sessions.filter(status='completed')
+
+    for session in upcoming_sessions:
+        session.unlocked = False  
+        if session.order == 1:
+            session.unlocked = True 
+        elif completed_sessions:
+            latest_completed=completed_sessions.order_by('order').first()
+            previous_session = all_sessions.filter(order=session.order - latest_completed.order).first()
+            if previous_session and previous_session.status == 'completed':
+                session.unlocked = True  
+
+    return render(request, 'upcoming_classes.html', {'upcoming_sessions': upcoming_sessions, 'completed_sessions': completed_sessions})
+
+
+def session_room(request,session_id):
+    user_session=get_object_or_404(UserSession,id=session_id)
+    try:
+        session_progress=SessionProgress.objects.get(user_session=user_session)
+        prev_duration=session_progress.duration
+    except:
+        prev_duration=0
+
+    return render(request,'goto_session.html',{'session':user_session,'prev_duration':prev_duration})
+
+
+def save_session_progress(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+        session_id = data.get('sessionId')
+        time_spent = data.get('timeSpent')
+
+        session,_=SessionProgress.objects.get_or_create(user_session_id=session_id)
+        session.duration=time_spent
+        session.save()
+
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error'}, status=400)
+
+
+def session_status_update(request):
+    return redirect ('session_room')
+
 
 
 def edit_supplement(request, supplement_id):

@@ -82,7 +82,49 @@ class Session(models.Model):
     plan = models.ForeignKey('Plan', on_delete=models.CASCADE)
     trainer = models.ForeignKey('TrainerProfile', on_delete=models.CASCADE,null=True,blank=True)
     time = models.CharField(max_length=100,null=True,blank=True)
+    order=models.IntegerField(default=1)
     duration = models.IntegerField(null=True,blank=True)
 
     def __str__(self):
         return f"Session for {self.plan.Name} with {self.trainer.name}"
+
+class SessionProgress(models.Model):
+    user_session=models.ForeignKey('UserSession',on_delete=models.CASCADE)
+    duration=models.IntegerField(default=0)
+
+
+class UserSession(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    session = models.ForeignKey(Session, on_delete=models.CASCADE)
+    date_joined = models.DateTimeField(auto_now_add=True)
+    date_completed = models.DateTimeField(null=True,blank=True)
+    order=models.IntegerField(default=1)
+    status = models.CharField(max_length=50, choices=[('upcoming', 'Upcoming'), ('completed', 'Completed')], default='upcoming')
+
+    def __str__(self):
+        return f"Session {self.session.title} for {self.user.name} - Status: {self.status}"
+
+
+
+class BuyHistory(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, blank=True)
+    supplements = models.ManyToManyField('ProductWithQuantity', blank=True)
+    purchase_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    payment_method = models.CharField(max_length=50, null=True, blank=True)  
+    card_number = models.CharField(max_length=20, null=True, blank=True) 
+    expiry_date = models.CharField(max_length=7, null=True, blank=True)  
+    cvv = models.CharField(max_length=4, null=True, blank=True)  
+    cardholder_name = models.CharField(max_length=100, null=True, blank=True)
+    upi_id = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return f"BuyHistory for {self.user} on {self.purchase_date}"
+
+
+class ProductWithQuantity(models.Model):
+    supplement = models.ForeignKey(Supplement, on_delete=models.CASCADE)
+    quantity=models.IntegerField(default=1)
+
+    def __str__(self):
+        return self.supplement.name

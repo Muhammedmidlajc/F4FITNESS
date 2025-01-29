@@ -1,0 +1,83 @@
+{% extends 'userbase.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">🥗 Your Diet Plan</h1>
+    <div class="diet-plan">
+        <div class="meal">
+            <h2>Breakfast</h2>
+            <ul>
+                <li>🍳 Scrambled Eggs</li>
+                <li>🥑 Avocado Toast</li>
+                <li>🍓 Fresh Berries</li>
+            </ul>
+        </div>
+        <div class="meal">
+            <h2>Lunch</h2>
+            <ul>
+                <li>🥗 Grilled Chicken Salad</li>
+                <li>🍚 Quinoa</li>
+                <li>🥕 Steamed Broccoli</li>
+            </ul>
+        </div>
+        <div class="meal">
+            <h2>Dinner</h2>
+            <ul>
+                <li>🍣 Baked Salmon</li>
+                <li>🥔 Mashed Sweet Potatoes</li>
+                <li>🥦 Sautéed Spinach</li>
+            </ul>
+        </div>
+        <div class="meal">
+            <h2>Snacks</h2>
+            <ul>
+                <li>🍌 Banana</li>
+                <li>🥜 Almonds</li>
+                <li>🍏 Apple Slices with Peanut Butter</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .page-title {
+        text-align: center;
+        color: #28a745;
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+    .diet-plan {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .meal {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .meal h2 {
+        color: #343a40;
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .meal ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .meal li {
+        font-size: 18px;
+        color: #495057;
+        margin: 5px 0;
+    }
+</style>
+{% endblock %}

@@ -78,6 +78,9 @@ urlpatterns = [
 
 
   path('payment/', views.payment_page, name='payment_page'), 
+  path('session_room/<int:session_id>/', views.session_room, name='session_room'), 
+  path('save_session_progress/', views.save_session_progress, name='save_session_progress'), 
+  path('session_status_update/', views.session_status_update, name='session_status_update'),
 
 
 
@@ -97,7 +100,21 @@ urlpatterns = [
  path('trainer_profile/', views.trainer_profile, name='trainer_profile'), 
  path('manage_sessions/<int:plan_id>/', views.manage_sessions, name='manage_sessions'), 
  path('delete_sessions/<int:session_id>/', views.delete_session, name='delete_session'), 
- path('trainer_clients/',views.trainer_clients,name='trainer_clients')
+ path('trainer_clients/',views.trainer_clients,name='trainer_clients'),
+ path('user_products/', views.user_products, name='user_products'),
+
+ path('cart/', views.cart_view, name='cart_view'),
+ path('add_to_cart/', views.add_to_cart, name='add_to_cart'),
+ path('product_payment/', views.product_payment, name='product_payment'),
+ path('proceed_payment/', views.proceed_payment, name='proceed_payment'),
+path('payment_success/', views.payment_success, name='payment_success'),
+path('order_history/', views.order_history, name='order_history'),
+path('diet_plan/', views.user_diet_plan, name='user_diet_plan'),
+path('user_sessions/', views.user_sessions, name='user_sessions'),
+
+
+
+
 
 
 ]

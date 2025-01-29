@@ -1,0 +1,154 @@
+{% extends 'userbase.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title" style="font-family: 'Arial', sans-serif;">📅 Upcoming Classes</h1>
+    
+    <div class="upcoming-sessions">
+        <h2 style="font-family: 'Arial', sans-serif;">Upcoming Sessions</h2>
+        <div class="session-list">
+            {% for session in upcoming_sessions %}
+            <div class="session">
+                <div class="session-icon">🏋️</div>
+                <div class="session-details">
+                    <h2 style="font-family: 'Arial', sans-serif;">{{ session.session.title }}</h2>
+                    <h3 style="font-family: 'Arial', sans-serif;">session : {{ session.order }}</h3>
+
+                    <p style="font-family: 'Arial', sans-serif;">Date: {{ session.session.date }}</p>
+                    <p style="font-family: 'Arial', sans-serif;">Time: {{ session.session.time }}</p>
+                    <p style="font-family: 'Arial', sans-serif;">Trainer: {{ session.session.trainer }}</p>
+                    <div class="button-container">
+                        <a href="{% url 'session_room' session.id %}">
+                            <button 
+                                {% if not session.unlocked %} 
+                                    disabled 
+                                {% endif %} 
+                                class="session-button {% if not session.unlocked %}disabled-button{% endif %}">
+                                Go to Session
+                            </button>
+                        </a>
+                        {% if not session.unlocked %}
+                            <div class="lock-icon">🔒</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="completed-sessions">
+        <h2 style="font-family: 'Arial', sans-serif;">Completed Sessions</h2>
+        <div class="session-list">
+            {% for session in completed_sessions %}
+            <div class="session">
+                <div class="session-icon">🏋️</div>
+                <div class="session-details">
+                    <h3 style="font-family: 'Arial', sans-serif;">{{ session.session.title }}</h3>
+                    <p style="font-family: 'Arial', sans-serif;">Date: {{ session.session.date }}</p>
+                    <p style="font-family: 'Arial', sans-serif;">Time: {{ session.session.time }}</p>
+                    <p style="font-family: 'Arial', sans-serif;">Trainer: {{ session.session.trainer }}</p>
+                    <a href="{% url 'session_room' session.id %}"><button 
+                        class="session-button ">
+                        Go to Session
+                    </button></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    .page-title {
+        text-align: center;
+        color: #28a745;
+        font-size: 36px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        font-family: 'Arial', sans-serif;
+    }
+    h2 {
+        color: #343a40;
+        font-size: 28px;
+        margin-bottom: 20px;
+        font-weight: 500;
+        font-family: 'Arial', sans-serif;
+    }
+    .session-list {
+        margin-bottom: 40px;
+    }
+    .session {
+        display: flex;
+        align-items: center;
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .session:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    .session-icon {
+        font-size: 32px;
+        margin-right: 20px;
+    }
+    .session-details {
+        flex: 1;
+    }
+    .session h3 {
+        color: #343a40;
+        font-size: 22px;
+        margin-bottom: 10px;
+        font-weight: 500;
+        font-family: 'Arial', sans-serif;
+    }
+    .session p {
+        font-size: 16px;
+        color: #495057;
+        margin: 5px 0;
+        font-family: 'Arial', sans-serif;
+    }
+    .button-container {
+        position: relative;
+        display: inline-block;
+    }
+    .session-button {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: 'Arial', sans-serif;
+        font-size: 16px;
+    }
+    .disabled-button {
+        background-color: #6c757d;
+        cursor: not-allowed;
+    }
+    .lock-icon {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        font-size: 20px;
+        color: #dc3545;
+        background: white;
+        border-radius: 50%;
+        padding: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% endblock %}
