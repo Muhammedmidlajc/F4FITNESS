@@ -121,12 +121,12 @@
             {% if request.user.is_authenticated and request.user.userprofile.paid %}
             <ul>
                 <li><a href="{% url 'user_profile' %}">My Profile</a></li>
-                <li><a href="">Workout Plan</a></li>
+                <li><a href="{% url 'user_workout' %}">Workout Plan</a></li>
                 <li><a href="{% url 'user_diet_plan' %}">Diet Plan</a></li>
                 <li><a href="{% url 'user_products' %}">products</a></li>
                 <li><a href="{% url 'cart_view' %}">My Cart</a></li>
                 <li><a href="{% url 'order_history' %}">Orders</a></li>
-                <li><a href="{% url 'user_progress' %}">Progress Tracker</a></li>
+                <!-- <li><a href="{% url 'user_progress' %}">Progress Tracker</a></li> -->
                 <li><a href="{% url 'user_sessions' %}">Upcoming Classes</a></li>
                 <li><a href="{% url 'chatbot' %}">Chat Bot</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>

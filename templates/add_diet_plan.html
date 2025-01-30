@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Diet Plan</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 8px rgba(40, 167, 69, 0.2);
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .button:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Diet Plan</h1>
+        <form action="{% url 'add_diet_plan' user_id %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="breakfast">Breakfast:</label>
+                <textarea id="breakfast" name="breakfast" class="form-control" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="lunch">Lunch:</label>
+                <textarea id="lunch" name="lunch" class="form-control" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="dinner">Dinner:</label>
+                <textarea id="dinner" name="dinner" class="form-control" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="snacks">Snacks:</label>
+                <textarea id="snacks" name="snacks" class="form-control" rows="2" required></textarea>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="button">Add Diet Plan</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

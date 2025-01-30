@@ -6,24 +6,46 @@
     <title>Clients List</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
             margin: 0;
-            padding: 20px;
+            padding: 40px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1000px; /* Increased width */
             margin: auto;
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 30px; /* Increased padding */
+            border-radius: 12px; /* More rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
         }
 
         h1 {
             text-align: center;
-            color: #333;
+            color: #007bff; /* Changed color for a stylish look */
+            font-size: 2.5em; /* Increased font size */
+            margin-bottom: 20px; /* Added margin */
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px; /* Space between buttons and table */
+        }
+
+        .button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px; /* Space between buttons */
+        }
+
+        .button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
         }
 
         table {
@@ -33,27 +55,36 @@
         }
 
         th, td {
-            padding: 15px;
+            padding: 20px; /* Increased padding */
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 2px solid #ddd; /* Thicker border */
         }
 
         th {
             background-color: #007bff;
             color: white;
+            font-size: 1.2em; /* Increased font size */
         }
 
         tr:hover {
-            background-color: #f1f1f1;
+            background-color: #f8f9fa; /* Lighter hover effect */
         }
 
         .client-name {
             font-weight: bold;
             color: #333;
+            font-size: 1.1em; /* Increased font size */
         }
 
         .client-details {
             color: #555;
+            font-size: 1em; /* Increased font size */
+        }
+
+        .plans {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
         }
     </style>
 </head>
@@ -64,21 +95,28 @@
             <thead>
                 <tr>
                     <th>Client Name</th>
-                    <th>Email</th>
                     <th>Phone</th>
+                    <th>DOB</th>
+                    <th>Plan</th>
+                    <th>Diet Plan</th>
+                    <th>Workout Plan</th>
                 </tr>
             </thead>
             <tbody>
+                {% for client in clients %}
                 <tr>
-                    <td class="client-name">Client Name 1</td>
-                    <td class="client-details">client1@example.com</td>
-                    <td class="client-details">(123) 456-7890</td>
+                    <td class="client-name">{{ client.name }}</td>
+                    <td class="client-details">{{ client.phone_number }}</td>
+                    <td class="client-details">{{ client.dob }}</td>
+                    <td class="client-details">{{ client.plan.Name }}</td>
+                    <td class="client-details plans">    
+                        <a href="{% url 'trainer_diet_plan' client.id %}"><button class="button">Diet Plans</button></a>
+                    </td>
+                    <td class="client-details plans">
+                        <a href="{% url 'trainer_workoutplan' client.id %}"><button class="button">Workout Plans</button></a>
+                    </td>
                 </tr>
-                <tr>
-                    <td class="client-name">Client Name 2</td>
-                    <td class="client-details">client2@example.com</td>
-                    <td class="client-details">(098) 765-4321</td>
-                </tr>
+                {% endfor %}
                 <!-- Add more client rows as needed -->
             </tbody>
         </table>

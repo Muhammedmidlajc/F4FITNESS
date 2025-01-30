@@ -119,8 +119,8 @@
             markCompletedBtn.style.pointerEvents = 'auto';
 
             // Update button link and text
-            markCompletedLink.href = "{% url 'session_status_update' %}"
-            markCompletedLink.innerText = "Mark Completed";
+            markCompletedLink.href = "{% url 'session_status_update' session.id %}";
+            markCompletedLink.innerText = '{{status}}' == 'completed' ? "Completed" : "Mark Completed";
 
             clearInterval(timer); 
         }

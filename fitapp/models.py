@@ -128,3 +128,27 @@ class ProductWithQuantity(models.Model):
 
     def __str__(self):
         return self.supplement.name
+    
+
+class BotData(models.Model):
+    content=models.TextField()
+
+class DietPlan(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE,null=True,blank=True)
+    breakfast = models.TextField(default="🍳 Scrambled Eggs, 🥑 Avocado Toast, 🍓 Fresh Berries")
+    lunch = models.TextField(default="🥗 Grilled Chicken Salad, 🍚 Quinoa, 🥕 Steamed Broccoli")
+    dinner = models.TextField(default="🍣 Baked Salmon, 🥔 Mashed Sweet Potatoes, 🥦 Sautéed Spinach")
+    snacks = models.TextField(default="🍌 Banana, 🥜 Almonds, 🍏 Apple Slices with Peanut Butter")
+
+
+class WorkoutPlan(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE,null=True,blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    exercise_name = models.CharField(max_length=100)
+    sets = models.IntegerField(default=3)
+    repetitions = models.IntegerField(default=5)
+    duration = models.IntegerField(default=30)
+    notes = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.exercise_name} - {self.user.name} ({self.date_created.strftime('%Y-%m-%d')})"

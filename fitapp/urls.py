@@ -80,7 +80,8 @@ urlpatterns = [
   path('payment/', views.payment_page, name='payment_page'), 
   path('session_room/<int:session_id>/', views.session_room, name='session_room'), 
   path('save_session_progress/', views.save_session_progress, name='save_session_progress'), 
-  path('session_status_update/', views.session_status_update, name='session_status_update'),
+  path('session_status_update/<int:session_id>/', views.session_status_update, name='session_status_update'),
+  path('user_workout/', views.user_workoutplan, name='user_workout'),
 
 
 
@@ -111,6 +112,18 @@ path('payment_success/', views.payment_success, name='payment_success'),
 path('order_history/', views.order_history, name='order_history'),
 path('diet_plan/', views.user_diet_plan, name='user_diet_plan'),
 path('user_sessions/', views.user_sessions, name='user_sessions'),
+
+
+path('trainer_diet_plan/<int:user_id>/', views.trainer_diet_plan, name='trainer_diet_plan'),
+path('trainer_workoutplan/<int:user_id>/', views.trainer_workout_plan, name='trainer_workoutplan'),
+
+
+path('add_diet_plan/<int:user_id>/', views.add_diet_plan, name='add_diet_plan'),
+path('add_workout_plan/<int:user_id>/', views.add_workout_plan, name='add_workout_plan'),
+
+path('delete_diet_plan/<int:plan_id>/', views.delete_diet_plan, name='delete_diet_plan'),
+path('delete_workout_plan/<int:plan_id>/', views.delete_workout_plan, name='delete_workout_plan'),
+
 
 
 

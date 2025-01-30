@@ -1,0 +1,105 @@
+<!-- Start Generation Here -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Workout Plans</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Workout Plans</h1>
+        <div class="button-container">
+            <a href="{% url 'add_workout_plan' user_id %}" class="button">Add Workout Plan</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Workout Name</th>
+                    <th>Duration</th>
+                    <th>Sets</th>
+                    <th>Repetitions</th>
+                    <th>Notes</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for plan in workout_plans %}
+                <tr>
+                    <td>{{ plan.exercise_name }}</td>
+                    <td>{{ plan.duration }} minutes</td>
+                    <td>{{ plan.sets }}</td>
+                    <td>{{ plan.repetitions }}</td>
+                    <td>{{ plan.notes }}</td>
+                    <td><a href="{% url 'delete_workout_plan' plan.id %}"><button>Delete</button></a></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No workout plans available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+<!-- End Generation Here -->

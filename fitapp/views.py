@@ -119,18 +119,51 @@ def user_progress(request):
 
 from django.http import JsonResponse
 import json
+import google.generativeai as genai
+
+
+GOOGLE_API_KEY=''
+
+def get_answer(question):
+
+    prompt = f"""
+    Please analyze the following text and answer the question.
+    
+    Question: {question}
+    
+    text: {BotData.objects.filter().first().content}
+    
+    Please provide a clear and concise answer based on the document content above.
+
+    also response like gym bot if talk casually like hii ,heloo 
+    """
+    
+    # Using Gemini
+    genai.configure(api_key=GOOGLE_API_KEY)
+    model = genai.GenerativeModel('gemini-pro')
+    try:
+        response = model.generate_content(prompt)
+        answer = response.text.strip()
+        return {'response': answer}
+
+    except Exception as e:
+        print(e)
+        return False
+
+
 
 def chatbot(request):
     if request.method == 'POST':
         data = json.loads(request.body) 
         user_message = data.get('message') 
-        bot_response = "This is a placeholder response." 
-        print(user_message)
-        if user_message == 'hii':
-            bot_response = 'helllo'
-        return JsonResponse({'response': bot_response})
-    return render(request, 'chatbot.html')
 
+        res=get_answer(user_message)
+        if not res == False:
+            return JsonResponse(res)
+        else:
+            return JsonResponse({'response': 'your bot is not available now '})
+
+    return render(request, 'chatbot.html')
 
 
 
@@ -538,11 +571,14 @@ def order_history(request):
     return render(request, 'orders.html', {'purchase_history': purchase_history})
 
 def user_diet_plan(request):
-    return render(request, 'user_diet_plan.html')
+    user = get_object_or_404(UserProfile, user=request.user)
+    diet_plan = DietPlan.objects.filter(user=user)
+    return render(request, 'user_diet_plan.html', {'diet_plan': diet_plan})
 
 
 def trainer_clients(request):
-    return render(request,'trainer_clients.html')
+    clients=UserProfile.objects.all()
+    return render(request,'trainer_clients.html',{'clients':clients})
 
 
 def user_sessions(request):
@@ -572,7 +608,7 @@ def session_room(request,session_id):
     except:
         prev_duration=0
 
-    return render(request,'goto_session.html',{'session':user_session,'prev_duration':prev_duration})
+    return render(request,'goto_session.html',{'session':user_session,'prev_duration':prev_duration,'status':user_session.status})
 
 
 def save_session_progress(request):
@@ -590,8 +626,11 @@ def save_session_progress(request):
     return JsonResponse({'status': 'error'}, status=400)
 
 
-def session_status_update(request):
-    return redirect ('session_room')
+def session_status_update(request,session_id):
+    user_session=get_object_or_404(UserSession,id=session_id)
+    user_session.status='completed'
+    user_session.save()
+    return redirect ('session_room',session_id=session_id)
 
 
 
@@ -658,17 +697,79 @@ def customer_form(request, product_id):
     return render(request, 'f4fitness/customer_form.html', {'product': product})
 
 
-
-
-
-
-
 def order_success(request):
     return render(request, 'f4fitness/order_success.html',)
 
 
+def user_workoutplan(request):
+    user_profile = get_object_or_404(UserProfile, user=request.user)
+    workout_plans = WorkoutPlan.objects.filter(user=user_profile)
+    return render(request, 'user_workout.html', {'workout_plans': workout_plans})
 
 
+def trainer_diet_plan(request,user_id):
+    user_profile = get_object_or_404(UserProfile, id=user_id)
+    diet_plans = DietPlan.objects.filter(user=user_profile)
+    return render(request, 'trainer_diet_plan.html', {'diet_plans': diet_plans,'user_id':user_id})
+
+def trainer_workout_plan(request,user_id):
+    user_profile = get_object_or_404(UserProfile, id=user_id)
+    workout_plans = WorkoutPlan.objects.filter(user=user_profile)
+    return render(request, 'trainer_workout_plan.html', {'workout_plans': workout_plans,'user_id':user_id})
+
+
+
+def add_workout_plan(request,user_id):
+    if request.method == "POST":
+        exercise_name = request.POST.get('exercise_name')
+        duration = request.POST.get('duration')
+        sets = request.POST.get('sets')
+        repetitions = request.POST.get('repetitions')
+        notes = request.POST.get('notes')
+        user_profile = get_object_or_404(UserProfile,id=user_id)
+
+        WorkoutPlan.objects.create(
+            user=user_profile,
+            exercise_name=exercise_name,
+            duration=duration,
+            sets=sets,
+            repetitions=repetitions,
+            notes=notes
+        )
+        return redirect('trainer_workoutplan', user_id=user_id)
+
+    return render(request, 'add_workout_plan.html',{'user_id':user_id})
+
+def add_diet_plan(request,user_id):
+    if request.method == "POST":
+        breakfast = request.POST.get('breakfast')
+        lunch = request.POST.get('lunch')
+        dinner = request.POST.get('dinner')
+        snacks = request.POST.get('snacks')
+        user_profile = get_object_or_404(UserProfile,id=user_id)
+
+        DietPlan.objects.create(
+            user=user_profile,
+            breakfast=breakfast,
+            lunch=lunch,
+            dinner=dinner,
+            snacks=snacks
+        )
+        return redirect('trainer_diet_plan',user_id=user_id)
+
+    return render(request, 'add_diet_plan.html',{'user_id':user_id})
+
+
+def delete_diet_plan(request, plan_id):
+    diet_plan = get_object_or_404(DietPlan, id=plan_id)
+    diet_plan.delete()
+    return redirect('trainer_diet_plan', user_id=diet_plan.user.id)
+
+
+def delete_workout_plan(request, plan_id):
+    workout_plan = get_object_or_404(WorkoutPlan, id=plan_id)
+    workout_plan.delete()
+    return redirect('trainer_workoutplan', user_id=workout_plan.user.id)
 
 
 
