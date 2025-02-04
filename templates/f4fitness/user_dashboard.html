@@ -3,9 +3,148 @@
 {% block title %}Dashboard Home{% endblock %}
 
 {% block content %}
-    {% if user_data.paid %}
+
+{% block css %}
+<style>
+    .card {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+    
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    .profile-info {
+        display: flex;
+        align-items: center;
+    }
+    
+    .profile-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 15px;
+        border: 2px solid #3498db;
+    }
+    
+    .basic-info {
+        font-size: 0.9rem;
+        color: #555;
+    }
+    
+    .button-container {
+        margin-left: auto;
+    }
+    
+    .progress-bar {
+        background: #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+        height: 20px;
+        width: 100%;
+        margin: 10px 0;
+    }
+    
+    .progress-bar > div {
+        background-color: #4caf50;
+        height: 100%;
+        color: #fff;
+        text-align: center;
+        line-height: 20px;
+        font-weight: bold;
+    }
+    
+    .payment-btn, .attendance-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s, transform 0.3s;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    .attendance-btn {
+        background-color: #28a745;
+    }
+    
+    .attendance-btn:hover {
+        background-color: #218838;
+        transform: translateY(-1px);
+    }
+    
+    .attendance-btn:active {
+        transform: translateY(0);
+    }
+    
+    .payment-btn {
+        background-color: #007bff;
+    }
+    
+    .payment-btn:hover {
+        background-color: #0056b3;
+    }
+    
+    .payment-btn:active {
+        background-color: #004085;
+    }
+    
+    .stylish-button {
+        /* Additional styling can be added here if needed */
+    }
+    
+    @media (max-width: 768px) {
+        .header-container {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .button-container {
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .attendance-btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}
+
+    {% if user_data.paid and not user_data.payment_expired %}
         <div class="card">
-            <h3>Welcome back, {{ user.username }}</h3>
+            <div class="header-container">
+                <div class="profile-info">
+                    {% if user.profile.image %}
+                        <img src="{{ user.profile.image.url }}" alt="" class="profile-img">
+                    {% else %}
+                        <!-- Fallback image if none exists -->
+                        <img src="" alt="" class="profile-img">
+                    {% endif %}
+                    <div>
+                        <h3>Welcome back, {{ user.username }}</h3>
+                        <div class="basic-info">
+                            <p>Phone: {{ user_data.phone_number }}</p>
+                            <p>Plan: {{ user_data.plan }}</p>
+                            <p>Plan Type: {{ user_data.plan.Type }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <a href="{% url 'mark_attendence' %}" class="attendance-btn stylish-button">{% if not att_status %}Mark Attendance{% else %}Marked{% endif %}</a>
+                </div>
+            </div>
             <p>Today is a great day to stay fit and healthy. Check your workout progress below.</p>
         </div>
 
@@ -17,75 +156,13 @@
             <p>You're doing great! Keep pushing toward your fitness goals.</p>
         </div>
 
-        <div class="card">
-            <h3>Attend Class</h3>
-            {% if upcoming_classes %}
-                <ul>
-                    {% for class in upcoming_classes %}
-                        <li>{{ class.name }} - {{ class.time }}</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>No upcoming classes at the moment. Stay tuned!</p>
-            {% endif %}
-        </div>
-
-        <div class="card">
-            <h3>Your Diet Plan</h3>
-            {% if diet_plan %}
-                <p>Today's meals include:</p>
-                <ul>
-                    {% for meal in diet_plan %}
-                        <li>{{ meal.name }}: {{ meal.details }}</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>No diet plan available for today.</p>
-            {% endif %}
-        </div>
     {% else %}
-    <div class="card">
-        <h3>Price: {{ user_data.plan.price }}</h3>
-    
-        <p>No upcoming classes at the moment. Stay tuned!</p>
-        <p>Complete your payment to unlock exclusive classes and schedules.</p>
-        <a href="{% url 'payment_page' %}" class="payment-btn stylish-button">Make a Payment</a>
-    </div>
+        <div class="card">
+            <h3>Price: {{ user_data.plan.price }}</h3>
+            <p>No upcoming classes at the moment. Stay tuned!</p>
+            <p>Complete your payment to unlock exclusive classes and schedules.</p>
+            <a href="{% url 'payment_page' %}" class="payment-btn stylish-button">Make a Payment</a>
+        </div>
     {% endif %}
+    
 {% endblock %}
-
-<!-- Add CSS styles for the progress bar and stylish button -->
-<style>
-    .card {
-        background: #ffffff;
-        padding: 20px;
-        border-radius: 10px;
-        margin: 20px 0;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .progress-bar {
-        background: #ddd;
-        border-radius: 5px;
-        overflow: hidden;
-        height: 20px;
-        width: 100%;
-        margin: 10px 0;
-    }
-    .payment-btn {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: white;
-        border-radius: 5px;
-        text-decoration: none;
-        transition: background-color 0.3s;
-        font-size: 16px;
-        font-weight: bold;
-    }
-    .payment-btn:hover {
-        background-color: #0056b3;
-    }
-    .payment-btn:active {
-        background-color: #004085;
-    }
-</style>

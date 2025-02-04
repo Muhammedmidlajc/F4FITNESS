@@ -4,7 +4,7 @@ from .models import UserProfile
 from .models import TrainerProfile
 from .models import plan,Supplement
 from .models import Payment
-from .models import CustomerOrder
+from .models import CustomerOrder,Attendance
 
 
 
@@ -23,3 +23,4 @@ admin.site.register(SessionProgress)
 admin.site.register(BotData)
 admin.site.register(DietPlan)
 admin.site.register(WorkoutPlan)
+admin.site.register(Attendance)
