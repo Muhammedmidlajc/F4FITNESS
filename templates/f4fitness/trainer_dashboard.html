@@ -1,131 +1,162 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trainer Dashboard</title>
-    <style>
-        /* General Styles */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-            display: flex;
-            flex-direction: column; /* Changed to column for footer positioning */
-            height: 100vh;
-        }
+{% extends 'userbase.html' %}
 
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 200px;
-            height: 100%;
-            background-color: #28a745;
-            color: white;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        }
+{% block title %}Trainer Attendance{% endblock %}
 
-        .sidebar h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
+{% block content %}
 
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            width: 100%;
-            text-align: center;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
 
-        .sidebar a:hover, .sidebar .active {
-            background-color: #218838;
-        }
+    /* Sidebar */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 200px;
+        height: 100%;
+        background-color: #28a745;
+        color: white;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
 
-        /* Main Content */
-        .main-content {
-            margin-left: 220px; /* Offset to account for the sidebar width */
-            padding: 30px;
-            width: calc(100% - 220px); /* Ensures the content area fills the remaining width */
-            text-align: center;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column; /* Changed to column for footer positioning */
-            justify-content: space-between; /* Ensures footer stays at the bottom */
-        }
+    .sidebar h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
 
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
+    .sidebar a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 10px;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
 
-        .cards {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+    .sidebar a:hover, .sidebar .active {
+        background-color: #218838;
+    }
 
-        .card {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 250px;
-            transition: transform 0.3s;
-            text-align: center;
-        }
+    /* Main Content */
+    .main-content {
+        margin-left: 220px;
+        padding: 30px;
+        width: calc(100% - 220px);
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
+    .header h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
 
-        .card .title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
-        }
+    .cards {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
 
-        .card .value {
-            font-size: 24px;
-            color: #28a745;
-        }
+    .card {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 250px;
+        transition: transform 0.3s;
+        text-align: center;
+    }
 
-        /* Footer */
-        .footer {
-            margin-top: auto; /* Pushes footer to the bottom */
-            font-size: 14px;
-            color: #777;
-        }
-    </style>
-</head>
-<body>
-    <div class="sidebar">
-        <h2>Trainer Dashboard</h2>
-        <a href="#" class="active">Dashboard</a>
-        <a href="{% url 'trainer_profile' %}">My Profile</a>
-        <a href="{% url 'trainer_plan' %}">Sessions</a>
-        <a href="{% url 'trainer_clients' %}">Clients</a>
-        <a href="{% url 'logout' %}">logout</a>
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card .title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .card .value {
+        font-size: 24px;
+        color: #28a745;
+    }
+
+    /* Attendance Button */
+    .button-container {
+        margin-top: 20px;
+    }
+
+    .attendance-btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #28a745;
+        color: white;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .attendance-btn:hover {
+        background-color: #218838;
+        transform: scale(1.05);
+    }
+
+    .attendance-btn:active {
+        transform: scale(1);
+    }
+
+    /* Footer */
+    .footer {
+        margin-top: auto;
+        font-size: 14px;
+        color: #777;
+        text-align: center;
+        padding: 20px;
+    }
+</style>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>Trainer Dashboard</h2>
+    <a href="#" class="active">Dashboard</a>
+    <a href="{% url 'trainer_profile' %}">My Profile</a>
+    <a href="{% url 'trainer_plan' %}">Sessions</a>
+    <a href="{% url 'trainer_clients' %}">Clients</a>
+    <a href="{% url 'trainer_attendance' %}">Attendance</a>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="header">
+        <h1>Welcome, Trainer</h1>
     </div>
-
-    <div class="main-content">
-        <div class="header">
-            <h1>Welcome, Trainer</h1>
-        </div>
 
         <div class="cards">
             <div class="card">
@@ -138,9 +169,17 @@
             </div>
         </div>
 
-        <div class="footer">
-            <p>&copy; 2025 Trainer Dashboard. All rights reserved.</p>
-        </div>
+    <!-- Attendance Button -->
+    <div class="button-container">
+        <a href="{% url 'trainer_mark_attendance' %}" class="attendance-btn stylish-button">
+            {% if not att_status %}Mark Attendance{% else %}Marked{% endif %}
+        </a>
     </div>
-</body>
-</html>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Trainer Dashboard. All rights reserved.</p>
+    </div>
+</div>
+
+{% endblock %}

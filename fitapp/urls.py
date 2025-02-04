@@ -130,6 +130,11 @@ path('mark_attendence/', views.mark_attendance, name='mark_attendence'),
  path('users1/', views.offline_usermanagement, name='offline_usermangement'),
  path('assign_trainer/<int:user_id>/', views.assign_trainer, name='assign_trainer'),
 
+  
+  path('trainer_attendance/', views.trainer_attendance, name='trainer_attendance'),
+  path('trainer_mark_attendance/', views.trainer_mark_attendance, name='trainer_mark_attendance'),
+
+
 
 ]
 

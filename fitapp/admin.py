@@ -6,7 +6,7 @@ from .models import plan,Supplement
 from .models import Payment
 from .models import CustomerOrder
 from .models import BotData,BuyHistory,ProductWithQuantity,Session,UserSession,SessionProgress,DietPlan,WorkoutPlan
-from .models import Attendance
+from .models import Attendance,trainer_Attendance
 
 
 
@@ -26,3 +26,4 @@ admin.site.register(BotData)
 admin.site.register(DietPlan)
 admin.site.register(WorkoutPlan)
 admin.site.register(Attendance)
+admin.site.register(trainer_Attendance)
