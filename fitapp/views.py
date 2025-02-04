@@ -10,7 +10,7 @@ from.models import UserProfile
 from django.contrib.auth.models import User
 from.models import plan
 from .forms import PlanForm
-from.models import Supplement
+from.models import Supplement,Attendance
 from .forms import SupplementForm
 from.models import *
 from .models import Session
@@ -133,7 +133,7 @@ import json
 import google.generativeai as genai
 
 
-GOOGLE_API_KEY=''
+GOOGLE_API_KEY='AIzaSyB6UAQPGETfh7SyWJLSybojWIwKaDqGOkA'
 
 def get_answer(question):
 
@@ -199,8 +199,12 @@ def admin_dashboard_view(request):
 
 def user_dashboard(request):
     profile=UserProfile.objects.get(user=request.user)
-
-    return render(request, 'f4fitness/user_dashboard.html',{'user_data':profile})
+    today=datetime.datetime.today()
+    if Attendance.objects.filter(user=profile,date=today).exists():
+        att_status=True
+    else:
+        att_status=False
+    return render(request, 'f4fitness/user_dashboard.html',{'user_data':profile,'att_status':att_status})
 
 
 
@@ -795,9 +799,46 @@ def delete_workout_plan(request, plan_id):
     return redirect('trainer_workoutplan', user_id=workout_plan.user.id)
 
 
+from datetime import timedelta
+def my_attendance(request):
+    today=datetime.datetime.today()
+    user_profile = request.user.userprofile
+   
+    start_date = today.replace(day=1)
+    date_range = []
+    current_date = start_date
+    while current_date <= today:
+        date_range.append(current_date)
+        current_date += timedelta(days=1)
+    
+    attendances = Attendance.objects.filter(
+        user=user_profile,
+        date__gte=start_date,
+        date__lte=today
+    ).values_list('date', flat=True)
+    
+    print(attendances,'asdfafd')
+    present_dates = set(attendances)
+    attendance_status = [
+        {
+            'date': single_date,
+            'status': 'present' if single_date in present_dates else 'absent'
+        }
+        for single_date in date_range
+    ]
+    print(attendance_status)
+    return render(request, 'my_attendance.html', {'attendance_status': attendance_status})
 
 
 def offline_usermanagement(request):
     users = UserProfile.objects.filter(plan__Type="Offline") 
     trainers=TrainerProfile.objects.all()
     return render(request, 'f4fitness/offline_usermangement.html', {'users': users,'trainers':trainers})
+
+def mark_attendance(request):  
+    today=datetime.datetime.today()
+    user=get_object_or_404(UserProfile,user=request.user)
+    if Attendance.objects.filter(user=user,date=today).exists():
+        return redirect('user_dashboard')
+    attendence=Attendance.objects.create(user=user,date=today,status=True)
+    return redirect('user_dashboard')

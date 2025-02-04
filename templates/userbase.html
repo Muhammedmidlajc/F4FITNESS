@@ -118,7 +118,7 @@
     <div class="dashboard-container">
         <div class="sidebar">
             <h2>User Menu</h2>
-            {% if request.user.is_authenticated and request.user.userprofile.paid %}
+            {% if request.user.is_authenticated and request.user.userprofile.paid and not user_data.payment_expired %}
             <ul>
                 <li><a href="{% url 'user_profile' %}">My Profile</a></li>
                 <li><a href="{% url 'user_workout' %}">Workout Plan</a></li>
@@ -127,9 +127,13 @@
                 <li><a href="{% url 'cart_view' %}">My Cart</a></li>
                 <li><a href="{% url 'order_history' %}">Orders</a></li>
                 <!-- <li><a href="{% url 'user_progress' %}">Progress Tracker</a></li> -->
+                {% if user.userprofile.plan.Type == "Online" %} 
                 <li><a href="{% url 'user_sessions' %}">Upcoming Classes</a></li>
+                {% endif %}
                 <li><a href="{% url 'chatbot' %}">Chat Bot</a></li>
+                <li><a href="{% url 'my_attendance' %}">My Attendance</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
+
             </ul>
             {% endif %}
         </div>

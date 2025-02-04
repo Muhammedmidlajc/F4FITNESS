@@ -14,6 +14,8 @@ class UserProfile(models.Model):
     image1 = models.ImageField(upload_to='profile_images/', default='profile_images/default.png')
     paid=models.BooleanField(default=False)
     trainer = models.ForeignKey('TrainerProfile', on_delete=models.SET_NULL, null=True, blank=True, related_name="trainees")
+    payment_expired=models.BooleanField(default=False)
+
 
 
 class TrainerProfile(models.Model):
@@ -152,3 +154,12 @@ class WorkoutPlan(models.Model):
 
     def __str__(self):
         return f"{self.exercise_name} - {self.user.name} ({self.date_created.strftime('%Y-%m-%d')})"
+
+
+class Attendance(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE,null=True,blank=True)
+    date= models.DateField(null=True,blank=True) 
+    status=models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Attendance for {self.user.name} on {self.date}"

@@ -124,7 +124,8 @@ path('add_workout_plan/<int:user_id>/', views.add_workout_plan, name='add_workou
 path('delete_diet_plan/<int:plan_id>/', views.delete_diet_plan, name='delete_diet_plan'),
 path('delete_workout_plan/<int:plan_id>/', views.delete_workout_plan, name='delete_workout_plan'),
 
-
+path('my_attendance/', views.my_attendance, name='my_attendance'),
+path('mark_attendence/', views.mark_attendance, name='mark_attendence'),
 
  path('users1/', views.offline_usermanagement, name='offline_usermangement'),
 
