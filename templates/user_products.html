@@ -3,6 +3,7 @@
 {% block title %}Gym Supplements{% endblock %}
 
 {% block content %}
+{% load static %}
     <style>
         /* General Styles */
         body {
@@ -14,7 +15,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -52,7 +53,7 @@
 
         .supplement-image {
             width: 100%;
-            height: 200px;
+            height: 140px;
             object-fit: cover;
             border-radius: 10px 10px 0 0;
         }
@@ -92,7 +93,7 @@
             {% for supplement in supplements %}
             <div class="supplement-card">
                 <!-- Uncomment the line below if you have images for supplements -->
-                <img src="" alt="" class="supplement-image">
+                <img src="{{supplement.image}}" alt="" class="supplement-image">
                 <div class="supplement-title">{{ supplement.name }}</div>
                 <div class="supplement-description">{{ supplement.description }}</div>
                 <div class="supplement-description">{{ supplement.price }}</div>

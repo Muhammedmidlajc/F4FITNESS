@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online User Management</title>
+    <title>Offline User Management</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -99,9 +99,9 @@
 </head>
 <body>
     <div class="navbar">
-        <h1> Online User Management</h1>
+        <h1> Offline User Management</h1>
         <div>
-            <a href="{% url 'user_management' %}">Dashboard</a>
+            <a href="">Dashboard</a>
             {% comment %} <a href="{% url 'logout' %}">Logout</a> {% endcomment %}
         </div>
     </div>
@@ -120,8 +120,8 @@
                     <th>PHONE</th>
                     <th>Actions</th>
                     <th>Trainer</th>
+                    
                 </tr>
-
             </thead>
             <tbody>
                 {% for user in users %}
@@ -131,6 +131,7 @@
                     <td>{{ user.plan }}</td>
                     <td>{{ user.user }}</td>
                     <td>{{ user.phone_number }}</td>
+                    
                     <td>
                         <a href="{% url 'edit_user' user.user.id %}" class="btn">Edit</a>
                         <a href="{% url 'delete_user' user.user.id %}" class="btn btn-delete">Delete</a>

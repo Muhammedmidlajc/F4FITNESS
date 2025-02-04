@@ -76,11 +76,11 @@
             <ul>
                 <li><a href="#">Dashboard</a></li>
                 <li><a href="{% url 'trainer_managment' %}">Trainer</a></li>
-                <li><a href="{% url 'user_management' %}">Users</a></li>
+                <li><a href="{% url 'user_management' %}">Online Users</a></li>
+                <li><a href="{% url 'offline_usermangement' %}">Offline Users</a></li>
                 <li><a href="{% url 'plan_management' %}">Plans</a></li>
                 <li><a href="{% url 'productmanagement' %}">Products</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="">Logout</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
             </ul>
         </div>
 
