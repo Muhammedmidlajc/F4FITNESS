@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
 from .forms import UserProfileForm
 from .forms import TrainerProfileForm
-from. import views
 from.models import TrainerProfile
 from django.shortcuts import get_object_or_404
 from.models import UserProfile
@@ -15,6 +14,7 @@ from .forms import SupplementForm
 from.models import *
 from .models import Session
 from django.contrib.auth.decorators import login_required
+from datetime import timedelta
 
 
 
@@ -200,6 +200,7 @@ def admin_dashboard_view(request):
 def user_dashboard(request):
     profile=UserProfile.objects.get(user=request.user)
     today=datetime.datetime.today()
+    
     if Attendance.objects.filter(user=profile,date=today).exists():
         att_status=True
     else:
@@ -237,7 +238,10 @@ def trainer_register_view(request):
 
 
 def trainer_dashboard(request):
-    return render(request,'f4fitness/trainer_dashboard.html')
+    users=UserProfile.objects.filter(trainer=request.user.trainerprofile)
+    user_count=users.count()
+    session_count=Session.objects.all().count()
+    return render(request,'f4fitness/trainer_dashboard.html',{'user_count':user_count,'session_count':session_count})
 
 def trainer_plan(request):
     plans = plan.objects.all()
@@ -297,10 +301,10 @@ def delete_trainer(request,trainer_id):
 
 
 def user_management(request):
-    users = UserProfile.objects.all()
     users = UserProfile.objects.filter(plan__Type="Online") 
- 
-    return render(request, 'f4fitness/user_management.html', {'users': users})
+    trainers=TrainerProfile.objects.all()
+    return render(request, 'f4fitness/user_management.html', {'users': users,'trainers':trainers})
+
 
 def edit_user(request, user_id):
     user = get_object_or_404(UserProfile, user__id=user_id)
@@ -425,6 +429,7 @@ def payment_page(request):
                 UserSession.objects.create(session=session, user=profile, date_completed=datetime.datetime.now(), order=session.order)
 
             profile.paid = True
+            profile.payment_date=datetime.date.today()
             profile.save()
         return render(request, 'f4fitness/success.html', {'payment': payment})
     return render(request, 'f4fitness/payment.html',{'plan':profile.plan})
@@ -604,7 +609,7 @@ def user_diet_plan(request):
 
 
 def trainer_clients(request):
-    clients=UserProfile.objects.all()
+    clients=UserProfile.objects.filter(trainer=request.user.trainerprofile)
     return render(request,'trainer_clients.html',{'clients':clients})
 
 
@@ -799,12 +804,10 @@ def delete_workout_plan(request, plan_id):
     return redirect('trainer_workoutplan', user_id=workout_plan.user.id)
 
 
-from datetime import timedelta
 def my_attendance(request):
     today=datetime.date.today()
     user_profile = request.user.userprofile
-   
-    start_date = today.replace(day=1)
+    start_date = user_profile.payment_date if user_profile.payment_date else  today.replace(day=1)
     date_range = []
     current_date = start_date
     while current_date <= today:
@@ -817,7 +820,6 @@ def my_attendance(request):
         date__lte=today
     ).values_list('date', flat=True)
     
-    print(attendances,'asdfafd')
     present_dates = set(attendances)
     attendance_status = [
         {
@@ -826,7 +828,6 @@ def my_attendance(request):
         }
         for single_date in date_range
     ]
-    print(attendance_status)
     return render(request, 'my_attendance.html', {'attendance_status': attendance_status})
 
 
@@ -835,6 +836,7 @@ def offline_usermanagement(request):
     trainers=TrainerProfile.objects.all()
     return render(request, 'f4fitness/offline_usermangement.html', {'users': users,'trainers':trainers})
 
+
 def mark_attendance(request):  
     today=datetime.datetime.today()
     user=get_object_or_404(UserProfile,user=request.user)
@@ -842,3 +844,13 @@ def mark_attendance(request):
         return redirect('user_dashboard')
     attendence=Attendance.objects.create(user=user,date=today,status=True)
     return redirect('user_dashboard')
+
+
+def assign_trainer(request,user_id):
+    if request.method == 'POST':
+        user=get_object_or_404(UserProfile,id=user_id)
+        trainer_id=request.POST.get('trainer')
+        trainer=get_object_or_404(TrainerProfile,id=trainer_id)
+        user.trainer=trainer    
+        user.save()
+    return redirect('user_management')

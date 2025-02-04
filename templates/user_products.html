@@ -92,8 +92,7 @@
         <div class="supplement-list">
             {% for supplement in supplements %}
             <div class="supplement-card">
-                <!-- Uncomment the line below if you have images for supplements -->
-                <img src="{{supplement.image}}" alt="" class="supplement-image">
+                <img src="{{supplement.image.url}}" alt="" class="supplement-image">
                 <div class="supplement-title">{{ supplement.name }}</div>
                 <div class="supplement-description">{{ supplement.description }}</div>
                 <div class="supplement-description">{{ supplement.price }}</div>

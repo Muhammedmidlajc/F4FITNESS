@@ -136,15 +136,17 @@
                         <a href="{% url 'delete_user' user.user.id %}" class="btn btn-delete">Delete</a>
                     </td>
                     <td> 
-
-                        <label for="Trainer">ASSIGN TRAINER:</label>
-                        <select id="trainer" name="">%%
+                        <form action="{% url 'assign_trainer' user.id %}" method="post">
+                            {% csrf_token %}
+                        <select id="trainer" name="trainer">
+                          <option value="{{ user.trainer.id}}">{% if user.trainer %}{{user.trainer.name}} {% else %}----{% endif %}</option>
                             {% for i in trainers %}
-                          <option value="">----</option>
-                          <option value="">{{i.name}}</option>
+                          <option value="{{ i.id}}">{{i.name}}</option>
                           {% endfor %}
                         </select>
-                        
+                        <button class="btn" type="submit">Assign </button>
+
+                    </form>
 
 
                     </td>

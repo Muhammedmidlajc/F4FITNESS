@@ -15,6 +15,7 @@ class UserProfile(models.Model):
     paid=models.BooleanField(default=False)
     trainer = models.ForeignKey('TrainerProfile', on_delete=models.SET_NULL, null=True, blank=True, related_name="trainees")
     payment_expired=models.BooleanField(default=False)
+    payment_date=models.DateField(null=True,blank=True)
 
 
 

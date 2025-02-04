@@ -120,6 +120,8 @@
             <h2>User Menu</h2>
             {% if request.user.is_authenticated and request.user.userprofile.paid and not user_data.payment_expired %}
             <ul>
+                <li><a href="{% url 'user_dashboard' %}">Dashboard</a></li>
+
                 <li><a href="{% url 'user_profile' %}">My Profile</a></li>
                 <li><a href="{% url 'user_workout' %}">Workout Plan</a></li>
                 <li><a href="{% url 'user_diet_plan' %}">Diet Plan</a></li>
