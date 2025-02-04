@@ -778,7 +778,7 @@ def delete_workout_plan(request, plan_id):
 
 from datetime import timedelta
 def my_attendance(request):
-    today=datetime.datetime.today()
+    today=datetime.date.today()
     user_profile = request.user.userprofile
    
     start_date = today.replace(day=1)
