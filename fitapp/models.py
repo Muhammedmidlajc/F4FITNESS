@@ -163,3 +163,13 @@ class Attendance(models.Model):
 
     def __str__(self):
         return f"Attendance for {self.user.name} on {self.date}"
+    
+
+
+class trainer_Attendance(models.Model):
+    trainer = models.ForeignKey(TrainerProfile, on_delete=models.CASCADE,null=True,blank=True)
+    date= models.DateField(null=True,blank=True) 
+    status=models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Attendance for {self.trainer.name} on {self.date}"

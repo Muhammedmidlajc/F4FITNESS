@@ -133,7 +133,7 @@ import json
 import google.generativeai as genai
 
 
-GOOGLE_API_KEY='AIzaSyB6UAQPGETfh7SyWJLSybojWIwKaDqGOkA'
+GOOGLE_API_KEY='AIzaSyACYwJ4-I9RZgK7eoZhWRKKFmuaFII6xCw'
 
 def get_answer(question):
 
@@ -145,6 +145,7 @@ def get_answer(question):
     text: {BotData.objects.filter().first().content}
     
     Please provide a clear and concise answer based on the document content above.
+    only need answer do not reflect questions
 
     also response like gym bot if talk casually like hii ,heloo 
     """
@@ -237,7 +238,12 @@ def trainer_register_view(request):
 
 
 def trainer_dashboard(request):
-    return render(request,'f4fitness/trainer_dashboard.html')
+    date=datetime.date.today()
+    if trainer_Attendance.objects.filter(trainer=request.user.trainerprofile ,date=date).exists():
+        att_status=True
+    else:
+        att_status=False
+    return render(request,'f4fitness/trainer_dashboard.html',{'att_status':att_status})
 
 def trainer_plan(request):
     plans = plan.objects.all()
@@ -842,3 +848,46 @@ def mark_attendance(request):
         return redirect('user_dashboard')
     attendence=Attendance.objects.create(user=user,date=today,status=True)
     return redirect('user_dashboard')
+
+
+
+
+
+def trainer_mark_attendance(request):  
+    today=datetime.datetime.today()
+    trainer=get_object_or_404(TrainerProfile,user=request.user)
+    if trainer_Attendance.objects.filter(trainer=trainer,date=today).exists():
+        return redirect('trainer_dashboard')
+    attendence=trainer_Attendance.objects.create(trainer=trainer,date=today,status=True)
+    return redirect('trainer_dashboard')
+
+
+
+def trainer_attendance(request):
+    today=datetime.date.today()
+    trainer_profile = request.user.trainerprofile
+   
+    start_date = today.replace(day=1)
+    date_range = []
+    current_date = start_date
+    while current_date <= today:
+        date_range.append(current_date)
+        current_date += timedelta(days=1)
+    
+    attendances = trainer_Attendance.objects.filter(
+        trainer=trainer_profile,
+        date__gte=start_date,
+        date__lte=today
+    ).values_list('date', flat=True)
+    
+    print(attendances,'asdfafd')
+    present_dates = set(attendances)
+    attendance_status = [
+        {
+            'date': single_date,
+            'status': 'present' if single_date in present_dates else 'absent'
+        }
+        for single_date in date_range
+    ]
+    print(attendance_status)
+    return render(request, 'f4fitness/trainer_attendance.html', {'attendance_status': attendance_status})
