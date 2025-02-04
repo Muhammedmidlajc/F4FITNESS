@@ -18,7 +18,7 @@ urlpatterns = [
 
  # ADMIN:-
 
-  path('admin_login/', views.admin_login_view, name='admin_login'),
+  path('admin_login/', views.admin_login, name='admin_login'),
 
   path('admin_dashboard/', views.admin_dashboard_view, name='admin_dashboard'),
 
@@ -127,8 +127,7 @@ path('delete_workout_plan/<int:plan_id>/', views.delete_workout_plan, name='dele
 path('my_attendance/', views.my_attendance, name='my_attendance'),
 path('mark_attendence/', views.mark_attendance, name='mark_attendence'),
 
-
-
+ path('users1/', views.offline_usermanagement, name='offline_usermangement'),
 
 
 ]

@@ -14,7 +14,7 @@ from.models import Supplement,Attendance
 from .forms import SupplementForm
 from.models import *
 from .models import Session
-
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -37,6 +37,7 @@ def register(request,plan_id):
 
         if form.is_valid():
                 plan_obj=get_object_or_404(plan,id=plan_id)
+                print(plan_obj,'fffff')
                 try:
                     user=User.objects.create_user(username=username,password=password)
                 except Exception as e:
@@ -53,6 +54,16 @@ def register(request,plan_id):
         form = UserProfileForm()
 
     return render(request, 'f4fitness/register.html', {'form': form})
+
+def admin_login(request):
+    if request.method == 'POST':
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+
+        user=authenticate(username=username,password=password)
+        if user and user.is_superuser == True:
+            return redirect('admin_dashboard')
+    return render(request,'admin_login.html')
 
 
 def login_view(request):
@@ -77,7 +88,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     messages.success(request, 'You have been logged out successfully.')
-    return redirect('login')
+    return redirect('home')
 
 def user_profile(request):
     profile = get_object_or_404(UserProfile, user=request.user)
@@ -286,7 +297,9 @@ def delete_trainer(request,trainer_id):
 
 
 def user_management(request):
-    users = UserProfile.objects.all() 
+    users = UserProfile.objects.all()
+    users = UserProfile.objects.filter(plan__Type="Online") 
+ 
     return render(request, 'f4fitness/user_management.html', {'users': users})
 
 def edit_user(request, user_id):
@@ -404,6 +417,7 @@ def payment_page(request):
         amount=plan.price
         upi=request.POST.get('upi')
         payment = Payment.objects.create( profile=profile, amount=amount,upi_id=upi)
+        print(payment)
         
         if payment:
             sessions = Session.objects.filter(plan=plan).order_by('order')
@@ -414,6 +428,14 @@ def payment_page(request):
             profile.save()
         return render(request, 'f4fitness/success.html', {'payment': payment})
     return render(request, 'f4fitness/payment.html',{'plan':profile.plan})
+
+
+
+
+
+
+
+
 
 
 
@@ -477,6 +499,7 @@ def delete_session(request, session_id):
     messages.success(request, "Session deleted successfully.")  
     return redirect('manage_sessions', plan_id=session.plan.id) 
 
+@login_required(login_url='/login/')
 def user_products(request):
     products = Supplement.objects.all()
     return render(request, 'user_products.html', {'supplements': products})
@@ -807,6 +830,10 @@ def my_attendance(request):
     return render(request, 'my_attendance.html', {'attendance_status': attendance_status})
 
 
+def offline_usermanagement(request):
+    users = UserProfile.objects.filter(plan__Type="Offline") 
+    trainers=TrainerProfile.objects.all()
+    return render(request, 'f4fitness/offline_usermangement.html', {'users': users,'trainers':trainers})
 
 def mark_attendance(request):  
     today=datetime.datetime.today()

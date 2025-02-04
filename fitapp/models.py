@@ -13,6 +13,7 @@ class UserProfile(models.Model):
     image = models.ImageField(upload_to='profile_images/')
     image1 = models.ImageField(upload_to='profile_images/', default='profile_images/default.png')
     paid=models.BooleanField(default=False)
+    trainer = models.ForeignKey('TrainerProfile', on_delete=models.SET_NULL, null=True, blank=True, related_name="trainees")
     payment_expired=models.BooleanField(default=False)
 
 

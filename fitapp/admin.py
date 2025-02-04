@@ -4,7 +4,9 @@ from .models import UserProfile
 from .models import TrainerProfile
 from .models import plan,Supplement
 from .models import Payment
-from .models import CustomerOrder,Attendance
+from .models import CustomerOrder
+from .models import BotData,BuyHistory,ProductWithQuantity,Session,UserSession,SessionProgress,DietPlan,WorkoutPlan
+from .models import Attendance
 
 
 
