@@ -902,3 +902,90 @@ def trainer_attendance(request):
     ]
     print(attendance_status)
     return render(request, 'f4fitness/trainer_attendance.html', {'attendance_status': attendance_status})
+
+
+
+import cv2
+import face_recognition
+from django.views import View
+from django.http import JsonResponse
+import base64
+import json,os
+import numpy as np
+
+class CameraFaceRecognitionView(View):
+    def __init__(self):
+        self.known_faces = []
+        users=UserProfile.objects.all()
+        for user in users:
+            if user.image:
+                image_path = user.image.path  
+                if os.path.exists(image_path):
+                    img = face_recognition.load_image_file(image_path)
+                    encodings = face_recognition.face_encodings(img)
+                    if encodings:
+                        self.known_faces.append({
+                            "name": user.name,
+                            "image_path": user.image.url, 
+                            "encoding": encodings[0] 
+                        })
+                    else:
+                        print(f"⚠️ No face found in {user.name}'s image: {image_path}")
+
+        print(self.known_faces)
+    def get(self, request):
+        return render(request, 'faces.html')
+
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+            image_data = data.get('image')
+
+            if ',' in image_data:
+                image_data = image_data.split(',')[1]
+
+            nparr = np.frombuffer(base64.b64decode(image_data), np.uint8)
+            img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+            if img is None:
+                return JsonResponse({'status': 'error', 'message': 'Invalid image data'})
+
+            img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+            face_locations = face_recognition.face_locations(img_rgb, model="hog")
+
+            if not face_locations:
+                return JsonResponse({'status': 'success', 'faces': []})
+
+            face_encodings = face_recognition.face_encodings(img_rgb, face_locations)
+
+            faces_info = []
+            for i, (top, right, bottom, left) in enumerate(face_locations):
+                match_found = False
+                matched_user = None
+
+                if i < len(face_encodings):
+                    for user in self.known_faces:
+                        match = face_recognition.compare_faces([user["encoding"]], face_encodings[i])[0]
+                        if match:
+                            match_found = True
+                            matched_user = user
+                            break  # Stop checking after the first match
+
+                face_info = {
+                    'x': left,
+                    'y': top,
+                    'width': right - left,
+                    'height': bottom - top,
+                    'match': match_found,
+                    'matched_user': {
+                        "name": matched_user["name"],
+                        "image_path": matched_user["image_path"]
+                    } if match_found else None
+                }
+                faces_info.append(face_info)
+
+            return JsonResponse({'status': 'success', 'faces': faces_info})
+
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})

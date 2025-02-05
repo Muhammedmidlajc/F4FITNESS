@@ -7,14 +7,15 @@
 <style>
     /* General Styles */
     body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Poppins', sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f4f4f9;
+        background: linear-gradient(135deg, #e3ffe7, #d9e7ff);
         color: #333;
         display: flex;
         flex-direction: column;
         height: 100vh;
+        overflow: hidden;
     }
 
     /* Sidebar */
@@ -22,120 +23,141 @@
         position: fixed;
         top: 0;
         left: 0;
-        width: 200px;
+        width: 220px;
         height: 100%;
-        background-color: #28a745;
+        background: rgba(40, 167, 69, 0.9);
         color: white;
         padding: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+        border-radius: 0 15px 15px 0;
     }
 
     .sidebar h2 {
-        font-size: 20px;
-        margin-bottom: 20px;
+        font-size: 22px;
+        margin-bottom: 25px;
     }
 
     .sidebar a {
         color: white;
         text-decoration: none;
         display: block;
-        padding: 10px;
+        padding: 12px;
         width: 100%;
         text-align: center;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        transition: background-color 0.3s;
+        margin-bottom: 12px;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: all 0.3s;
     }
 
     .sidebar a:hover, .sidebar .active {
-        background-color: #218838;
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.05);
     }
 
     /* Main Content */
     .main-content {
-        margin-left: 220px;
-        padding: 30px;
-        width: calc(100% - 220px);
+        margin-left: 240px;
+        padding: 40px;
+        width: calc(100% - 240px);
         text-align: center;
-        flex-grow: 1;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
     }
 
     .header h1 {
-        font-size: 24px;
-        margin-bottom: 20px;
+        font-size: 28px;
+        font-weight: bold;
+        color: #1d3557;
+        margin-bottom: 25px;
     }
 
+    /* Cards */
     .cards {
         display: flex;
-        justify-content: center;
-        gap: 20px;
-        flex-wrap: wrap;
+        justify-content: space-evenly;
+        gap: 25px;
     }
 
     .card {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        width: 250px;
-        transition: transform 0.3s;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        width: 260px;
+        transition: all 0.3s;
         text-align: center;
     }
 
     .card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-8px);
+        background: rgba(255, 255, 255, 0.4);
     }
 
     .card .title {
-        font-size: 18px;
+        font-size: 20px;
         font-weight: bold;
         color: #333;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
     }
 
     .card .value {
-        font-size: 24px;
+        font-size: 28px;
         color: #28a745;
+        font-weight: bold;
     }
 
-    /* Attendance Button */
+    /* Buttons */
     .button-container {
-        margin-top: 20px;
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 14px 26px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
     }
 
     .attendance-btn {
-        display: inline-block;
-        padding: 12px 24px;
-        background-color: #28a745;
+        background: #28a745;
         color: white;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: bold;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     }
 
     .attendance-btn:hover {
-        background-color: #218838;
+        background: #218838;
         transform: scale(1.05);
     }
 
-    .attendance-btn:active {
-        transform: scale(1);
+    .check-person-btn {
+        background: #007bff;
+        color: white;
+    }
+
+    .check-person-btn:hover {
+        background: #0056b3;
+        transform: scale(1.05);
     }
 
     /* Footer */
     .footer {
         margin-top: auto;
         font-size: 14px;
-        color: #777;
+        color: #555;
         text-align: center;
         padding: 20px;
     }
@@ -158,21 +180,25 @@
         <h1>Welcome, Trainer</h1>
     </div>
 
-        <div class="cards">
-            <div class="card">
-                <div class="title">Total Sessions</div>
-                <div class="value">{{session_count}}</div>
-            </div>
-            <div class="card">
-                <div class="title">Total Clients</div>
-                <div class="value">{{user_count}}</div>
-            </div>
+    <!-- Cards -->
+    <div class="cards">
+        <div class="card">
+            <div class="title">Total Sessions</div>
+            <div class="value">{{ session_count }}</div>
         </div>
+        <div class="card">
+            <div class="title">Total Clients</div>
+            <div class="value">{{ user_count }}</div>
+        </div>
+    </div>
 
-    <!-- Attendance Button -->
+    <!-- Buttons -->
     <div class="button-container">
-        <a href="{% url 'trainer_mark_attendance' %}" class="attendance-btn stylish-button">
+        <a href="{% url 'trainer_mark_attendance' %}" class="btn attendance-btn">
             {% if not att_status %}Mark Attendance{% else %}Marked{% endif %}
+        </a>
+        <a href="" class="btn check-person-btn">
+            Check a Person
         </a>
     </div>
 

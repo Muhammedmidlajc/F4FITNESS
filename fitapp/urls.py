@@ -133,6 +133,7 @@ path('mark_attendence/', views.mark_attendance, name='mark_attendence'),
   
   path('trainer_attendance/', views.trainer_attendance, name='trainer_attendance'),
   path('trainer_mark_attendance/', views.trainer_mark_attendance, name='trainer_mark_attendance'),
+  path('face/', views.CameraFaceRecognitionView.as_view(), name='face'),
 
 
 
