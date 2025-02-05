@@ -492,13 +492,15 @@ def productview(request):
 
 
 def manage_sessions(request, plan_id):
-    sessions = Session.objects.filter(plan__id=plan_id)
+    sessions = Session.objects.filter(plan__id=plan_id).order_by('order')
     if request.method == 'POST':
         time = request.POST.get('time')
         duration = request.POST.get('duration')
         title = request.POST.get('title')
+        order = request.POST.get('order')
         trainer = request.user.trainerprofile 
-        new_session = Session(plan_id=plan_id,title=title ,time=time, duration=duration, trainer=trainer)
+        video=request.FILES.get('video')
+        new_session = Session(plan_id=plan_id,video=video,order=order,title=title ,time=time, duration=duration, trainer=trainer)
         new_session.save()
         messages.success(request, 'Session added successfully!')
         return redirect('manage_sessions', plan_id=plan_id)

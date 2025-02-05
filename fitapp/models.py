@@ -87,7 +87,8 @@ class Session(models.Model):
     time = models.CharField(max_length=100,null=True,blank=True)
     order=models.IntegerField(default=1)
     duration = models.IntegerField(null=True,blank=True)
-
+    video = models.FileField(upload_to='session_videos/', null=True, blank=True) 
+    
     def __str__(self):
         return f"Session for {self.plan.Name} with {self.trainer.name}"
 

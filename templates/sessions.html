@@ -219,6 +219,7 @@
                     <p>Time: <span>{{ session.time }}</span></p>
                     <p>Duration: <span>{{ session.duration }} Minutes</span></p>
                     <p>Trainer: <span>{{ session.trainer.name }}</span></p>
+                    <p>order: <span>{{ session.order }}</span></p>
                 </div>
                 <a href="" class="btn-edit">Edit</a>
                 <a href="{% url 'delete_session' session.id %}" class="btn-edit">Delete</a>
@@ -233,7 +234,7 @@
         <div class="popup-content">
             <button class="close-btn" onclick="closePopup()">×</button>
             <h2>Add New Session</h2>
-            <form action="{% url 'manage_sessions' plan_id %}" method="post">
+            <form action="{% url 'manage_sessions' plan_id %}" method="post" enctype="multipart/form-data" >
                 {% csrf_token %}
                 <label for="title">Title:</label>
                 <input type="text" name="title" id="title" required>
@@ -241,6 +242,10 @@
                 <input placeholder="Format : 9 To 5" type="text" name="time" id="time" required>
                 <label for="duration">Duration (minutes):</label>
                 <input type="number" name="duration" id="duration" required>
+                <label for="order">Order (video order):</label>
+                <input type="number" name="order" id="order" " required>
+                <label for="video">Upload Video </label>
+                <input type="file" name="video" id="video" " required>
                 <button type="submit">Add Session</button>
             </form>
         </div>
