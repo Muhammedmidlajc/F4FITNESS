@@ -120,6 +120,7 @@
                     <th>PHONE</th>
                     <th>Actions</th>
                     <th>Trainer</th>
+                    <th>Attendance</th>
                 </tr>
 
             </thead>
@@ -149,6 +150,9 @@
                     </form>
 
 
+                    </td>
+                    <td>
+                        <a href="{% url 'view_attendance' user.id %}" class="btn">View Attendance</a>
                     </td>
                 </tr>
                 {% empty %}

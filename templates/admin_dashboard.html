@@ -1,4 +1,3 @@
-<!-- templates/includes/dashboard_base.html -->
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -7,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Dashboard{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+    <!-- Font Awesome CDN for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -18,13 +19,41 @@
             background-color: #007bff; /* Updated navbar color for a more professional appearance */
             color: white;
             padding: 15px;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h1 {
+            margin: 0;
         }
         .navbar a {
             color: white;
             text-decoration: none;
             margin: 0 15px;
             font-weight: bold;
+        }
+        .notification-icon {
+            position: relative;
+            font-size: 22px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+        .notification-icon i {
+            color: white;
+        }
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
         }
         .container {
             display: flex;
@@ -69,6 +98,10 @@
 <body>
     <div class="navbar">
         <h1>Admin Dashboard</h1>
+        <div class="notification-icon">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge">3</span> <!-- Example Notification Count -->
+        </div>
     </div>
     <div class="container">
         <div class="sidebar">
@@ -92,3 +125,4 @@
     </div>
 </body>
 </html>
+

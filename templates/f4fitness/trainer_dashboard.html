@@ -170,6 +170,7 @@
     <a href="{% url 'trainer_profile' %}">My Profile</a>
     <a href="{% url 'trainer_plan' %}">Sessions</a>
     <a href="{% url 'trainer_clients' %}">Clients</a>
+    <a href="{% url 'user_chatlist' %}">Chat with User</a>
     <a href="{% url 'trainer_attendance' %}">Attendance</a>
     <a href="{% url 'logout' %}">Logout</a>
 </div>
@@ -197,7 +198,7 @@
         <a href="{% url 'trainer_mark_attendance' %}" class="btn attendance-btn">
             {% if not att_status %}Mark Attendance{% else %}Marked{% endif %}
         </a>
-        <a href="" class="btn check-person-btn">
+        <a href="{% url 'face' %}" class="btn check-person-btn">
             Check a Person
         </a>
     </div>

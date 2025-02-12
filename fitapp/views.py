@@ -991,3 +991,35 @@ class CameraFaceRecognitionView(View):
 
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
+
+
+
+
+
+
+
+
+def view_attendance(request, user_id):
+    user = get_object_or_404(UserProfile, id=user_id)
+    attendance_records = Attendance.objects.filter(user=user)
+    return render(request, 'f4fitness/view_attendance.html', {'user': user, 'attendance_records': attendance_records})
+
+
+
+
+
+
+def chat(request):
+    return render(request, 'f4fitness/chat.html')
+
+def send_message(request):
+    if request.method == 'POST':
+        message = request.POST.get('message', '')
+        response = {"message": message, "response": "Received!"}
+        return JsonResponse(response)
+    return JsonResponse({"error": "Invalid request"})
+
+
+
+def user_chatlist(request):
+    return render(request, 'f4fitness/user_chatlist.html')

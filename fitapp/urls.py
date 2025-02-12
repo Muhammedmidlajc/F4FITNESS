@@ -135,7 +135,17 @@ path('mark_attendence/', views.mark_attendance, name='mark_attendence'),
   path('trainer_mark_attendance/', views.trainer_mark_attendance, name='trainer_mark_attendance'),
   path('face/', views.CameraFaceRecognitionView.as_view(), name='face'),
 
+  path('attendance/<int:user_id>/', views.view_attendance, name='view_attendance'),
 
+
+
+
+  path('chat/', views.chat, name='chat'),
+  path('chat/send/', views.send_message, name='send_message'),
+
+
+
+  path('user_chatlist/', views.user_chatlist, name='user_chatlist'),
 
 ]
 

@@ -175,3 +175,16 @@ class trainer_Attendance(models.Model):
 
     def __str__(self):
         return f"Attendance for {self.trainer.name} on {self.date}"
+    
+
+
+
+
+    class ChatMessage(models.Model):
+        user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, blank=True, related_name="sent_messages")
+        trainer = models.ForeignKey(TrainerProfile, on_delete=models.CASCADE, null=True, blank=True, related_name="sent_messages_trainer")
+   
+    
+        message = models.TextField( null=True, blank=True)
+        timestamp = models.DateTimeField(auto_now_add=True)
+        is_read = models.BooleanField(default=False)

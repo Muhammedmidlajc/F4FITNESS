@@ -128,6 +128,7 @@
                 <li><a href="{% url 'user_products' %}">products</a></li>
                 <li><a href="{% url 'cart_view' %}">My Cart</a></li>
                 <li><a href="{% url 'order_history' %}">Orders</a></li>
+                <li><a href="{% url 'chat' %}">Chat with Trainer</a></li>
                 <!-- <li><a href="{% url 'user_progress' %}">Progress Tracker</a></li> -->
                 {% if user.userprofile.plan.Type == "Online" %} 
                 <li><a href="{% url 'user_sessions' %}">Upcoming Classes</a></li>
