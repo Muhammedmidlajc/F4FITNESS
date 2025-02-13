@@ -5,11 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Interface</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .chat-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .message {
+            max-width: 75%;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .user-message {
+            background-color: #d1e7ff;
+            align-self: flex-end;
+            text-align: right;
+        }
+        .trainer-message {
+            background-color: #e2e8f0;
+            align-self: flex-start;
+            text-align: left;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 h-screen flex flex-col items-center justify-center">
     <div class="w-full max-w-lg bg-white shadow-lg rounded-lg overflow-hidden">
         <div class="bg-blue-600 p-4 text-white font-bold text-lg">Chat with Trainer</div>
-        <div class="p-4 h-80 overflow-y-auto" id="chat-box">
+        <div class="p-4 h-80 overflow-y-auto chat-box" id="chat-box">
             <!-- Chat messages will be appended here -->
         </div>
         <div class="p-4 border-t flex">
@@ -26,7 +48,7 @@
             if (messageText !== '') {
                 let chatBox = document.getElementById('chat-box');
                 let messageDiv = document.createElement('div');
-                messageDiv.classList.add('bg-blue-100', 'p-2', 'my-2', 'rounded-lg', 'self-end', 'text-right');
+                messageDiv.classList.add('message', 'user-message');
                 messageDiv.innerText = messageText;
                 chatBox.appendChild(messageDiv);
                 
