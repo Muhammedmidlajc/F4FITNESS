@@ -1008,30 +1008,68 @@ def view_attendance(request, user_id):
 
 
 
-
+from django.db.models import Q
 def chat(request):
-    return render(request, 'f4fitness/chat.html')
+    trainer=get_object_or_404(UserProfile,user=request.user).trainer
+    trainer_id=trainer.user.id if trainer else None
+    messages = ChatMessage.objects.filter(
+    Q(sender=request.user, receiver=trainer.user) | 
+    Q(sender=trainer.user, receiver=request.user)
+    ).order_by('timestamp')
+    return render(request, 'f4fitness/chat.html',{'trainer_id':trainer_id,'messages':messages})
+
+
+def trainer_chat(request):
+    trainer=get_object_or_404(TrainerProfile,user=request.user)
+    user_id=request.GET.get('user_id')
+    messages = ChatMessage.objects.filter(
+    (Q(sender__id=user_id, receiver=trainer.user) | Q(sender=trainer.user, receiver__id=user_id))
+    ).order_by('timestamp')
+
+    return render(request, 'trainer_chat.html',{'user_id':user_id,'messages':messages})
+
 
 def send_message(request):
     if request.method == 'POST':
+        trainer_id=request.GET.get('trainer_id')
         message = request.POST.get('message', '')
-        response = {"message": message, "response": "Received!"}
-        return JsonResponse(response)
-    return JsonResponse({"error": "Invalid request"})
+        if trainer_id:
+            trainer=get_object_or_404(User,id=trainer_id)
+            ChatMessage.objects.create(sender=request.user, receiver=trainer, message=message)
+        return redirect('chat')
+
+
+from django.urls import reverse
+def send_message_trainer(request):
+    if request.method == 'POST':
+        trainer_id = request.GET.get('trainer_id')
+        user_id = request.GET.get('user_id')
+        message = request.POST.get('message', '')
+
+        if trainer_id:
+            trainer = get_object_or_404(User, id=trainer_id)
+            ChatMessage.objects.create(sender=request.user, receiver=trainer, message=message)
+        return redirect(f"{reverse('trainer_chat')}?user_id={user_id}") 
 
 
 
+from django.db.models import OuterRef, Subquery
 def user_chatlist(request):
-    return render(request, 'f4fitness/user_chatlist.html')
+    latest_messages = ChatMessage.objects.filter(
+        receiver=request.user,
+        sender=OuterRef('sender')
+    ).order_by('-timestamp').values('timestamp')[:1]
 
+    chats = ChatMessage.objects.filter(
+        receiver=request.user,
+        timestamp=Subquery(latest_messages)
+    ).order_by('-timestamp')
 
+    return render(request, 'f4fitness/user_chatlist.html', {'chats': chats})
 
 
 def contact(request):
     return render(request, 'f4fitness/contact_page.html')
-
-
-
 
 
 from math import pow

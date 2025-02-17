@@ -141,7 +141,9 @@ path('mark_attendence/', views.mark_attendance, name='mark_attendence'),
 
 
   path('chat/', views.chat, name='chat'),
-  path('chat/send/', views.send_message, name='send_message'),
+  path('trainer_chat/', views.trainer_chat, name='trainer_chat'),
+  path('send_message_trainer/', views.send_message_trainer, name='send_message_trainer'),
+  path('send_message/', views.send_message, name='send_message'),
 
 
 

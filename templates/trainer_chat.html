@@ -30,7 +30,7 @@
             {% endfor %}
         </div>
         <div class="chat-input">
-            <form method="post" action="{% url 'send_message' %}?trainer_id={{ trainer_id }}">
+            <form method="post" action="{% url 'send_message_trainer' %}?user_id={{ user_id }}">
                 {% csrf_token %}
                 <input type="text" name="message" placeholder="Type a message..." class="message-input">
                 <button type="submit" class="send-button">Send</button>
