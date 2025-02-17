@@ -37,6 +37,26 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
+        /* Button Styles */
+        .btn {
+            display: block;
+            width: 180px;
+            padding: 6px;
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 500;
+            border-radius: 40px;
+            margin: 20px auto;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
         /* Table Styles */
         table {
             width: 100%;
@@ -168,24 +188,13 @@
             color: #3498db;
         }
     </style>
+</head>
 <body>
     <div class="container">
         <h1>Attendance Overview</h1>
         
-        <!-- <div class="summary-cards">
-            <div class="card">
-                <h3>Total Days</h3>
-                <div class="number">30</div>
-            </div>
-            <div class="card">
-                <h3>Present Days</h3>
-                <div class="number">25</div>
-            </div>
-            <div class="card">
-                <h3>Absent Days</h3>
-                <div class="number">5</div>
-            </div>
-        </div> -->
+        <!-- Add Button -->
+        <a href="{% url 'user_dashboard'%}" class="btn">Back to Dashboard</a>
 
         <table>
             <thead>

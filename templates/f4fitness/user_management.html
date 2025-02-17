@@ -101,7 +101,7 @@
     <div class="navbar">
         <h1> Online User Management</h1>
         <div>
-            <a href="{% url 'user_management' %}">Dashboard</a>
+            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
             {% comment %} <a href="{% url 'logout' %}">Logout</a> {% endcomment %}
         </div>
     </div>
@@ -142,6 +142,7 @@
                         <select id="trainer" name="trainer">
                           <option value="{{ user.trainer.id}}">{% if user.trainer %}{{user.trainer.name}} {% else %}----{% endif %}</option>
                             {% for i in trainers %}
+                         
                           <option value="{{ i.id}}">{{i.name}}</option>
                           {% endfor %}
                         </select>

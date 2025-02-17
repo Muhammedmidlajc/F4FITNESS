@@ -76,12 +76,13 @@
                                     <li><a href="trainer_login">TRAINER</a></li>
                                     <li><a href="{% url  'admin_login' %}">Admin</a></li>
                                     <li><a href="{% url  'uplan' %}">REGISTRATION</a></li>
+                                    <li><a href="{% url  'bmi_calculator' %}">BMI</a></li>
                                 </ul>
                             </nav>
                         </div>          
                         <!-- Header-btn -->
                         <div class="header-btns d-none d-lg-block f-right">
-                           <a href="contact.html" class="btn">Contact Us</a>
+                           <a href="{% url 'contact'%}" class="btn">Contact Us</a>
                        </div>
                        <!-- Mobile Menu -->
                        <div class="col-12">
@@ -126,8 +127,8 @@
                             <div class="topic-content-box">
                                 <div class="topic-content">
                                     <h3>OFFLINE TRAINING</h3>
-                                    <p>You’ll look at graphs and charts in Task One, how to approach the task and <br> the language needed for a successful answer.</p>
-                                    <a href="courses.html" class="border-btn">View Courses</a>
+                                    <p>Experience the ultimate fitness transformation at our state-of-the-art offline gym and a motivating community come together to help you achieve your health and wellness goals</p>
+                                    <a href="{% url  'uplan' %}" class="border-btn">View Courses</a>
                                 </div>
                             </div>
                         </div>
@@ -141,8 +142,8 @@
                             <div class="topic-content-box">
                                 <div class="topic-content">
                                     <h3>ONLINE TRAINING</h3>
-                                    <p>You’ll look at graphs and charts in Task One, how to approach the task and <br> the language needed for a successful answer.</p>
-                                    <a href="courses.html" class="btn">View Courses</a>
+                                    <p>Join our dynamic online gym community and elevate your fitness journey with expert guidance, engaging workouts, and real-time support—all from the comfort of your home!</p>
+                                    <a href="{% url  'uplan' %}" class="btn">View Courses</a>
                                 </div>
                             </div>
                         </div>
@@ -169,8 +170,8 @@
                             <img src={% static "img/gallery/team1.png" %} alt="">
                         </div>
                         <div class="cat-cap">
-                            <h5><a href="services.html">Body Building</a></h5>
-                            <p>You’ll look at graphs and charts in Task One, how to approach the task </p>
+                            <h5><a href="#">Body Building</a></h5>
+                            <p>Bodybuilding is not just a sport; it's a lifestyle that demands dedication, discipline, and perseverance to sculpt the perfect physique </p>
                         </div>
                     </div>
                 </div>
@@ -180,8 +181,8 @@
                             <img src={% static "img/gallery/team2.png" %} alt="">
                         </div>
                         <div class="cat-cap">
-                            <h5><a href="services.html">Muscle Gain</a></h5>
-                            <p>You’ll look at graphs and charts in Task One, how to approach the task </p>
+                            <h5><a href="#">Muscle Gain</a></h5>
+                            <p> Building muscle is all about combining intense strength training with a balanced diet rich in protein and essential nutrients to fuel your body and promote growth. </p>
                         </div>
                     </div>
                 </div>
@@ -191,8 +192,8 @@
                             <img src={% static "img/gallery/team3.png" %} alt="">
                         </div>
                         <div class="cat-cap">
-                            <h5><a href="services.html">Weight Loss</a></h5>
-                            <p>You’ll look at graphs and charts in Task One, how to approach the task </p>
+                            <h5><a href="#">Weight Loss</a></h5>
+                            <p>Achieving weight loss involves a balanced approach of regular physical activity, mindful eating, and maintaining a calorie deficit to shed excess pounds effectively.</p>
                         </div>
                     </div>
                 </div>
@@ -210,7 +211,7 @@
                         <div class="overlay">
                             <div class="overlay-content">
                                 <h3>Muscle gaining </h3>
-                                <a href="gallery.html"><i class="ti-plus"></i></a>
+                                <a href=""><i class="ti-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -220,8 +221,8 @@
                         <div class="gallery-img big-img" style="background-image: url({% static "img/gallery/gallery2.png" %});"></div>
                         <div class="overlay">
                             <div class="overlay-content">
-                                <h3>Muscle gaining </h3>
-                                <a href="gallery.html"><i class="ti-plus"></i></a>
+                                <h3>Strength Gain </h3>
+                                <a href=""><i class="ti-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -231,8 +232,8 @@
                         <div class="gallery-img big-img" style="background-image: url({% static "img/gallery/gallery3.png" %});"></div>
                         <div class="overlay">
                             <div class="overlay-content">
-                                <h3>Muscle gaining </h3>
-                                <a href="gallery.html"><i class="ti-plus"></i></a>
+                                <h3>Endurance Gain </h3>
+                                <a href=""><i class="ti-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -242,8 +243,8 @@
                         <div class="gallery-img big-img" style="background-image: url({% static "img/gallery/gallery4.png" %});"></div>
                         <div class="overlay">
                             <div class="overlay-content">
-                                <h3>Muscle gaining </h3>
-                                <a href="gallery.html"><i class="ti-plus"></i></a>
+                                <h3>Weight Gain</h3>
+                                <a href=""><i class="ti-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -253,8 +254,8 @@
                         <div class="gallery-img big-img" style="background-image: url({% static "img/gallery/gallery5.png" %});"></div>
                         <div class="overlay">
                             <div class="overlay-content">
-                                <h3>Muscle gaining </h3>
-                                <a href="gallery.html"><i class="ti-plus"></i></a>
+                                <h3>Fat Gain</h3>
+                                <a href=""><i class="ti-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -264,8 +265,8 @@
                         <div class="gallery-img big-img" style="background-image: url({% static "img/gallery/gallery6.png" %});"></div>
                         <div class="overlay">
                             <div class="overlay-content">
-                                <h3>Muscle gaining </h3>
-                                <a href="gallery.html"><i class="ti-plus"></i></a>
+                                <h3>Lean Muscle Gain </h3>
+                                <a href=""><i class="ti-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -332,115 +333,111 @@
                                     </div>
                                     
                                 </div>
-                                <a href="" class="border-btn border-btn2">Join Now</a>
+                                <a href="{% url  'uplan' %}"  class="border-btn border-btn2">Join Now</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="properties mb-30 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
+                    <div class="properties mb-30 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
                         <div class="properties__card">
                             <div class="about-icon">
                                 <img src={% static "img/icon/price.svg" %} alt="">
                             </div>
                             <div class="properties__caption">
-                                <span class="month">6 month</span>
-                                <p class="mb-25">$30/m  <span>(Single class)</span></p>
+                                <span class="month">Half Year Plan</span>
+                                <p class="mb-25">Type <span>(Offline)</span></p>
                                 <div class="single-features">
-                                    <div class="features-icon">
-                                        <img src="assets/img/icon/check.svg" alt="">
-                                    </div>
-                                    <div class="features-caption">
-                                        <p>Free riding </p>
-                                    </div>
-                                </div>
-                                <div class="single-features">
-                                    <div class="features-icon">
-                                        <img src="assets/img/icon/check.svg" alt="">
-                                    </div>
-                                    <div class="features-caption">
-                                        <p>Unlimited equipments</p>
-                                    </div>
-                                </div>
-                                <div class="single-features">
-                                    <div class="features-icon">
-                                        <img src="assets/img/icon/check.svg" alt="">
-                                    </div>
-                                    <div class="features-caption">
-                                        <p>Personal trainer</p>
-                                    </div>
-                                </div>
-                                <div class="single-features">
-                                    <div class="features-icon">
-                                        <img src="assets/img/icon/check.svg" alt="">
-                                    </div>
-                                    <div class="features-caption">
-                                        <p>Weight losing classes</p>
-                                    </div>
-                                </div>
-                                <div class="single-features mb-20">
-                                    <div class="features-icon">
-                                        <img src="assets/img/icon/check.svg" alt="">
-                                    </div>
-                                    <div class="features-caption">
-                                        <p>Month to mouth</p>
-                                    </div>
-                                </div>
-                                <a href="#" class="border-btn border-btn2">Join Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="properties mb-30 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".6s">
-                        <div class="properties__card">
-                            <div class="about-icon">
-                                <img src={% static "img/icon/price.svg" %} alt="">
-                            </div>
-                            <div class="properties__caption">
-                                <span class="month">1 Year</span>
-                                <p class="mb-25">$30/m  <span>(Single class)</span></p>
-                                <div class="single-features">
-                                    <div class="features-icon">
-                                        <img src="assets/img/icon/check.svg" alt="">
-                                    </div>
-                                    <div class="features-caption">
-                                        <p>Free riding </p>
-                                    </div>
-                                </div>
-                                <div class="single-features">
-                                    <div class="features-icon">
-                                        <img src="assets/img/icon/check.svg" alt="">
-                                    </div>
-                                    <div class="features-caption">
-                                        <p>Unlimited equipments</p>
-                                    </div>
-                                </div>
-                                <div class="single-features">
-                                    <div class="features-icon">
-                                        <img src="assets/img/icon/check.svg" alt="">
-                                    </div>
-                                    <div class="features-caption">
-                                        <p>Personal trainer</p>
-                                    </div>
-                                </div>
-                                <div class="single-features">
-                                    <div class="features-icon">
-                                        <img src="assets/img/icon/check.svg" alt="">
-                                    </div>
-                                    <div class="features-caption">
-                                        <p>Weight losing classes</p>
-                                    </div>
-                                </div>
-                                <div class="single-features mb-20">
                                     <div class="features-icon">
                                         <img src={% static "img/icon/check.svg" %} alt="">
                                     </div>
                                     <div class="features-caption">
-                                        <p>Month to mouth</p>
+                                        <p>Duration:6 Month</p>
                                     </div>
                                 </div>
-                                <a href="#" class="border-btn border-btn2">Join Now</a>
+                                <div class="single-features">
+                                    <div class="features-icon">
+                                        <img src={% static "img/icon/check.svg" %} alt="">
+                                    </div>
+                                    <div class="features-caption">
+                                        <p>Fee:4000</p>
+                                    </div>
+                                </div>
+                                <div class="single-features">
+                                    <div class="features-icon">
+                                        <img src="assets/img/icon/check.svg" alt="">
+                                    </div>
+                                    <div class="features-caption">
+                                        <p>Weight losing classes</p>
+                                    </div>
+                                </div>
+                                <div class="single-features">
+                                    <div class="features-icon">
+                                        <img src="assets/img/icon/check.svg" alt="">
+                                    </div>
+                                    <div class="features-caption">
+                                        <p>Description:Combo Plan Pack Include cardio</p>
+                                    </div>
+                                </div>
+                                <div class="single-features mb-20">
+                                    <div class="features-icon">
+                                        <img src="assets/img/icon/check.svg" alt="">
+                                    </div>
+                                    
+                                </div>
+                                <a href="{% url  'uplan' %}" class="border-btn border-btn2">Join Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="properties mb-30 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
+                        <div class="properties__card">
+                            <div class="about-icon">
+                                <img src={% static "img/icon/price.svg" %} alt="">
+                            </div>
+                            <div class="properties__caption">
+                                <span class="month">Live plan</span>
+                                <p class="mb-25">Type <span>(Offline)</span></p>
+                                <div class="single-features">
+                                    <div class="features-icon">
+                                        <img src={% static "img/icon/check.svg" %} alt="">
+                                    </div>
+                                    <div class="features-caption">
+                                        <p>Duration:1 Month</p>
+                                    </div>
+                                </div>
+                                <div class="single-features">
+                                    <div class="features-icon">
+                                        <img src={% static "img/icon/check.svg" %} alt="">
+                                    </div>
+                                    <div class="features-caption">
+                                        <p>Fee:1000</p>
+                                    </div>
+                                </div>
+                                <div class="single-features">
+                                    <div class="features-icon">
+                                        <img src="assets/img/icon/check.svg" alt="">
+                                    </div>
+                                    <div class="features-caption">
+                                        <p>Recorded class</p>
+                                    </div>
+                                </div>
+                                <div class="single-features">
+                                    <div class="features-icon">
+                                        <img src="assets/img/icon/check.svg" alt="">
+                                    </div>
+                                    <div class="features-caption">
+                                        <p>Description:Personal Traning</p>
+                                    </div>
+                                </div>
+                                <div class="single-features mb-20">
+                                    <div class="features-icon">
+                                        <img src="assets/img/icon/check.svg" alt="">
+                                    </div>
+                                    
+                                </div>
+                                <a href="{% url  'uplan' %}" class="border-btn border-btn2">Join Now</a>
                             </div>
                         </div>
                     </div>
@@ -470,7 +467,7 @@
                              and a welcoming environment that fosters dedication and community. At F4FITNESS, we’re about transforming lives
                              and helping you achieve your full potential. Join us and take the first step toward a stronger, healthier, and more confident you!
                          </p>
-                        <a href="courses.html" class="border-btn"> Courses</a>
+                        {% comment %} <a href="courses.html" class="border-btn"> Courses</a> {% endcomment %}
                     </div>
                 </div>
             </div>
@@ -497,7 +494,7 @@
                             </div>
                             <div class="blog-cap">
                                 <span>Gym & Fitness</span>
-                                <h3><a href="blog_details.html">Your Antibiotic One Day To 10 Day Options</a></h3>
+                                <h3><a href="">Regular workouts help build a habit, making fitness a part of your lifestyle.</a></h3>
                             </div>
                         </div>
                     </div>
@@ -510,7 +507,7 @@
                             </div>
                             <div class="blog-cap">
                                 <span>Gym & Fitness</span>
-                                <h3><a href="blog_details.html">Your Antibiotic One Day To 10 Day Options</a></h3>
+                                <h3><a href="">Everyone has their own fitness journey—focus on your progress and improvement</a></h3>
                             </div>
                         </div>
                     </div>
@@ -520,15 +517,15 @@
     </section>
     <!-- Blog Area End -->
     <!--? video_start -->
-    <div class="video-area section-bg2 d-flex align-items-center"  data-background="assets/img/gallery/video-bg.png">
+    {% comment %} <div class="video-area section-bg2 d-flex align-items-center"  data-background="assets/img/gallery/video-bg.png">
         <div class="container">
             <div class="video-wrap position-relative">
                 <div class="video-icon" >
-                    <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0"><i class="fas fa-play"></i></a>
+                    <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=tUykoP30Gb0"><i class="fas fa-play"></i></a>
                 </div>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
     <!-- video_end -->
     <!-- ? services-area -->
     <section class="services-area">
@@ -541,7 +538,7 @@
                         </div>
                         <div class="features-caption">
                             <h3>Location</h3>
-                            <p>You’ll look at graphs and charts in Task One, how to approach </p>
+                            <p>2nd floor e-mall mattannur, opposite side of police station   </p>
                         </div>
                     </div>
                 </div>
@@ -552,8 +549,8 @@
                         </div>
                         <div class="features-caption">
                             <h3>Phone</h3>
-                            <p>(91) 949 784 7801</p>
-                            <p>  (91) 949 728 5996</p>
+                            <p>(91) 808 956 7823</p>
+                            <p>  (91) 948 383 8938</p>
                         </div>
                     </div>
                 </div>
@@ -564,8 +561,8 @@
                         </div>
                         <div class="features-caption">
                             <h3>Email</h3>
-                            <p>jacson767@gmail.com</p>
-                            <p>contact56@zacsion.com</p>
+                            <p>f4fitness@gmail.com</p>
+                            <p>ownerf4fitness@gmail.com</p>
                         </div>
                     </div>
                 </div>
@@ -596,11 +593,11 @@
                                             <nav>
                                                 <ul>
                                                     <li><a href="{% url 'home' %}">Home</a></li>
-                                                    <li><a href="about.html">About</a></li>
-                                                    <li><a href="courses.html">Courses</a></li>
-                                                    <li><a href="pricing.html">Pricing</a></li>
+                                                    <li><a href="{% url  'about' %}">About</a></li>
+                                                    <li><a href="{% url  'uplan' %}">Courses</a></li>
+                                                    {% comment %} <li><a href="pricing.html">Pricing</a></li>
                                                     <li><a href="gallery.html">Gallery</a></li>
-                                                    <li><a href="contact.html">Contact</a></li>
+                                                    <li><a href="contact.html">Contact</a></li> {% endcomment %}
                                                 </ul>
                                             </nav>
                                         </div>   

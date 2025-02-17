@@ -147,6 +147,17 @@ path('mark_attendence/', views.mark_attendance, name='mark_attendence'),
 
   path('user_chatlist/', views.user_chatlist, name='user_chatlist'),
 
+
+  path('contact/', views.contact, name='contact'),
+
+
+
+  
+  path('bmi/', views.bmi_calculator, name='bmi_calculator'),
+
+
+  
+
 ]
 
 

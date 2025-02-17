@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% comment %} {% include "admin_dashboard.html" %}
+{% comment %} {% include "admin_dashboard.html" %} 
 {% block content %} {% endcomment %}
 <html lang="en">
 <head>
@@ -28,7 +28,11 @@
             margin: 0;
             font-size: 24px;
         }
-        .add-trainer-btn {
+        .header .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+        .add-trainer-btn, .new-button {
             background-color: #28a745;
             color: #fff;
             border: none;
@@ -36,8 +40,9 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            text-align: center;
         }
-        .add-trainer-btn:hover {
+        .add-trainer-btn:hover, .new-button:hover {
             background-color: #218838;
         }
         .container {
@@ -102,13 +107,18 @@
     </style>
 </head>
 <body>
-    {% comment %} {% include 'admin_dashboard.html' %}
+    {% comment %} {% include 'admin_dashboard.html' %} 
     {% endblock %} {% endcomment %}
 
     <div class="header">
         <h1>Trainer List</h1>
-        <a class="add-trainer-btn"  href="{% url 'trainer_register' %}">Add Trainer</a>
+        <div class="btn-group">
+            <a class="add-trainer-btn" href="{% url 'trainer_register' %}">Add Trainer</a>
+            <!-- New Button Next to Add Trainer -->
+            <a class="new-button" href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+        </div>
     </div>
+
     <div class="container">
         {% for trainer in trainers %}
         <div class="card">
@@ -125,6 +135,5 @@
     </div>
     {% comment %} {% endblock %} {% endcomment %}
 
-   
 </body>
 </html>

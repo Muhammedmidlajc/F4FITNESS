@@ -119,7 +119,7 @@ def user_profile(request):
         profile.save()
 
         messages.success(request, 'Profile updated successfully!')
-        return redirect('user_profile')
+        return redirect('user_dashboard')
 
     return render(request, 'userprofile.html', {'profile': profile})
 
@@ -480,7 +480,7 @@ def trainer_profile(request):
         profile.save()
 
         messages.success(request, 'Profile updated successfully!')
-        return redirect('trainer_profile')
+        return redirect('trainer_dashboard')
     return render(request, 'trainer_profile.html', {'profile': profile})
 
 
@@ -1023,3 +1023,43 @@ def send_message(request):
 
 def user_chatlist(request):
     return render(request, 'f4fitness/user_chatlist.html')
+
+
+
+
+def contact(request):
+    return render(request, 'f4fitness/contact_page.html')
+
+
+
+
+
+from math import pow
+
+def bmi_calculator(request):
+    bmi = None
+    category = None
+    height = None
+    weight = None
+    
+    if request.method == "POST":
+        try:
+            height = float(request.POST.get('height'))
+            weight = float(request.POST.get('weight'))
+            bmi = weight / pow(height, 2)  # BMI formula: weight (kg) / height^2 (m^2)
+
+            # Categorize the BMI
+            if bmi < 18.5:
+                category = 'Underweight'
+            elif 18.5 <= bmi < 24.9:
+                category = 'Normal weight'
+            elif 25 <= bmi < 29.9:
+                category = 'Overweight'
+            else:
+                category = 'Obesity'
+        except ValueError:
+            bmi = None
+            category = 'Invalid input. Please enter valid numbers for height and weight.'
+    
+    return render(request, 'f4fitness/bmi_calculator.html', {'bmi': bmi, 'category': category, 'height': height, 'weight': weight})
+
